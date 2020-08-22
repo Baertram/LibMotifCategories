@@ -46,6 +46,8 @@ constants.STYLE_CATEGORY                    = 1
 constants.STYLE_ACHIEVEMENT_ID              = 2
 constants.STYLE_EXAMPLE_ITEM_ID             = 3
 constants.STYLE_MOTIF_ID                    = 4
+constants.STYLE_APIVERSION                  = 5
+
 --Style books
 constants.STYLE_BOOK_ITEM_ID                = 1
 constants.STYLE_BOOK_CHAPTER_ITEM_ID        = 2

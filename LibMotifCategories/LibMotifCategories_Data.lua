@@ -305,6 +305,7 @@ lib.categoryLookup = categoryLookup
 --When was the last time the tables were changed? "New" means since last APIversion check was done and saved in
 --lib.lastAPIVersionBaseForNewCheck. All higher APIVersions count as new!
 local newLookup = {
+    --[[
     --Dropped
     [ITEMSTYLE_AREA_TSAESCI]            = LMC_MOTIF_CATEGORY_DROPPED,
     [ITEMSTYLE_ORG_REDORAN]             = LMC_MOTIF_CATEGORY_DROPPED,
@@ -317,8 +318,9 @@ local newLookup = {
     [ITEMSTYLE_ORG_ORDINATOR]           = LMC_MOTIF_CATEGORY_EXOTIC,
     [ITEMSTYLE_ORG_BUOYANT_ARMIGER]     = LMC_MOTIF_CATEGORY_EXOTIC,
     [ITEMSTYLE_AREA_ASHLANDER]          = LMC_MOTIF_CATEGORY_EXOTIC,
-
-    --TODO: Add new ones for all the DLCs after Worm Cult etc.
+    ]]
+    --Dynamically filled via function lib:addItemIdsOfStylesToInternalLookupTables() if APIVersionAdded of styleId
+    --is > last checked APIVersion in lib.lastAPIVersionBaseForNewCheck
 }
 lib.newLookup = newLookup
 
@@ -393,21 +395,34 @@ function lib:addItemIdsOfStylesToInternalLookupTables()
     ITEMSTYLE_MAX_VALUE                 = GetHighestItemStyleId()
     ]]
 
+    --The APIVersion the data tables were updated the last time, and thus new added styleIds are marked as "new"
+    -->Comparison of APIVersion parameter 5 within ESOStyleData[styleId] table with lib.lastAPIVersionBaseForNewCheck
+    local lastAPIVersionBaseForNewCheck = tonumber(lib.lastAPIVersionBaseForNewCheck)
+
     --Use the new data tables ESOStyleData and ESOStyleBookData to add the itemId, or an itemId range, dynamically for
     --each styleId. The "from" itemId is ESOStyleBookData[styleId][1] and the "to" itemId is
     --ESOStyleBookData[styleId][3].
     --The lookup table where this data is added is "motifIdToItemStyleLookup"
     for styleId, styleBookData in pairs(ESOStyleBookData) do
         if styleBookData then
-            local LibMotifCategoriesCategory  = (ESOStyleData[styleId] and ESOStyleData[styleId][constants.STYLE_CATEGORY])
-            if LibMotifCategoriesCategory ~= nil then
-                local fromRange = styleBookData[constants.STYLE_BOOK_ITEM_ID]
-                local toRange   = styleBookData[constants.STYLE_BOOK_CHAPTER_ITEM_ID]
-                if toRange == 0 then toRange = nil end
-                motifIdToItemStyleLookup:AddRange(fromRange ,toRange, styleId)
+            local styleData = ESOStyleData[styleId]
+            if styleData ~= nil then
+                local LibMotifCategoriesCategory  = styleData[constants.STYLE_CATEGORY]
+                if LibMotifCategoriesCategory ~= nil then
+                    local fromRange = styleBookData[constants.STYLE_BOOK_ITEM_ID]
+                    local toRange   = styleBookData[constants.STYLE_BOOK_CHAPTER_ITEM_ID]
+                    if toRange == 0 then toRange = nil end
+                    motifIdToItemStyleLookup:AddRange(fromRange, toRange, styleId)
 
-                --Add the category to the categories table
-                categoryLookup[styleId] = LibMotifCategoriesCategory
+                    --Add the category to the categories table
+                    categoryLookup[styleId] = LibMotifCategoriesCategory
+
+                    --Add the new styles to the "new" lookup table
+                    if lastAPIVersionBaseForNewCheck > 0
+                        and tonumber(styleData[constants.STYLE_APIVERSION]) > lastAPIVersionBaseForNewCheck then
+                        newLookup[styleId] = LibMotifCategoriesCategory
+                    end
+                end
             end
         end
     end
