@@ -71,7 +71,7 @@ local function checkIfStyleIsKnown(styleId, chapter, completelyKnown)
         return IsSmithingStyleKnown(styleId, nil)
     else
         if self:IsCrownStyleCategory(styleId) then
-            return IsItemLinkBookKnown(string.format(constants.styleItemLinkTemplate, lib:GetStyleBookId(styleId, true)))
+            return IsItemLinkBookKnown(string.format(constants.styleItemLinkTemplate, lib:GetStyleBookItemId(styleId, true)))
         else
             local chapterStart
             local chapterEnd
@@ -498,8 +498,8 @@ function lib:GetMotifNumberOfStyle(styleId)
 end
 
 
---Return the bookId of a style
-function lib:GetStyleBookId(styleId, isCrownBook)
+--Return the bookId of a style (it's an itemId)
+function lib:GetStyleBookItemId(styleId, isCrownBook)
     if not ESOStyleBookData[styleId] then return end
     isCrownBook = isCrownBook or false
     local bookTableIndexToUse = constants.STYLE_BOOK_ID
