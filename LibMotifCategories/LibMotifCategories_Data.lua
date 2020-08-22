@@ -18,7 +18,8 @@ local constants                 = lib.CONSTANTS
 ------------------------------------------------------------------------------------------------------------------------
 -- Data for styles, stylebooks, etc.
 ------------------------------------------------------------------------------------------------------------------------
---BASE DATA WAS TAKEN FROM "CRAFTSTORE FIXED AND IMPROVED", AND THE INTERNET!
+--BASE DATA TABLE WAS INSPIRED BY ADDON "CRAFTSTORE FIXED AND IMPROVED".
+--THE DATA WAS IMPROVED BY INTERNET RESSOURCES AND INGAME TESTS.
 --ALL RIGHTS AND THANKS TO THE MAINTAINERS OF THIS ADDON AND THE FOLLOWING WEBSEITES:
 --UESP, The Elder Scrolls Online WIKI, ESO MMO Fashion
 
@@ -153,7 +154,7 @@ lib.ESOStyleData = ESOStyleData
 -- Every motif also got a crown version with a different crownItemId, but there are some motifs which ONLY exist as
 -- crown books, like Frostcaster, Tsaesci
 -- -> styleId is determined via GetValidItemStyleId(styleIndex)
--- [styleId] = {number bookId, number chapterNumber, number crownBookId, number crownChapterNumber
+-- [styleId] = {number bookItemId, number chapterItem, number crownBookItemId, number crownChapterItemId
 -- } -- name of the style in language EN
 local ESOStyleBookData = {
     [1]   = {16425 , 0     , 64541 , 0},                -- Breton
@@ -273,6 +274,8 @@ lib.ESOStyleBookData = ESOStyleBookData
 -- e.g. some motifs do not have a non-crown version
 -- or there are several styleIds which all relate to the same motif
 local specialMotifs = {
+    noChapter           = {},
+    nonCrownOnly        = {},
     crownOnly           = {},
     multipleAreTheSame  = {},
 }
@@ -479,10 +482,20 @@ function lib:addItemIdsOfStylesToInternalLookupTables()
                     end
 
                     --Fill the special motifs table if necessary
-                    local bookItemId        = styleBookData[constants.STYLE_BOOK_ITEM_ID]
-                    local bookChapterItemId = styleBookData[constants.STYLE_BOOK_CHAPTER_ITEM_ID]
-                    local crownBookItemId   = styleBookData[constants.STYLE_BOOK_CROWN_ITEM_ID]
-                    --Only the crown book itemId is given? -> Crown motif ONLY
+                    local bookItemId                = styleBookData[constants.STYLE_BOOK_ITEM_ID]
+                    local bookChapterItemId         = styleBookData[constants.STYLE_BOOK_CHAPTER_ITEM_ID]
+                    local crownBookItemId           = styleBookData[constants.STYLE_BOOK_CROWN_ITEM_ID]
+                    local crownBookChapterItemId    = styleBookData[constants.STYLE_BOOK_CHAPTER_CROWN_ITEM_ID]
+                    --No chapter itemId is given? -> NON-CHAPTER
+                    if bookItemId and bookItemId > 0 and not bookChapterItemId then
+                        specialMotifs.noChapter[styleId] = true
+                    end
+                    --No crown itemId or crownChapterItemId is given but itemId is given? -> NON-CROWN only
+                    if bookItemId and bookItemId > 0 and crownBookItemId and crownBookItemId == 0
+                        and crownBookChapterItemId and crownBookChapterItemId == 0 then
+                        specialMotifs.nonCrownOnly[styleId] = true
+                    end
+                    --Only the crown book itemId is given? -> CROWN ONLY
                     if bookItemId and bookItemId == 0 and bookChapterItemId and bookChapterItemId == 0
                         and crownBookItemId and crownBookItemId > 0 then
                         specialMotifs.crownOnly[styleId] = true
