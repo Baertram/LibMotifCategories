@@ -35,15 +35,6 @@ local function getMaxItemStyleId()
 end
 
 
--- motifItemId is the itemId which will be used to compare with table "motifIdToItemStyleLookup" 's list of itemIds
--- which were added via "AddRange" function to this table (see initialization of the library)
-local function GetMotifItemIdByItemLink(itemLink)
-    if itemLink == nil or itemLink == "" then return -1 end
-    local motifItemId = GetItemLinkItemId(itemLink) or select(4, ZO_LinkHandler_ParseLink(itemLink))
-    return motifItemId
-end
-
-
 --Check if a style category in a style category table (given at the index styleCatTableIndex) equals a given value
 local function checkStyleCategoryEquals(styleId, styleCatTable, styleCatTableIndex, givenValueVar)
     --ESOStyleData[styleId][constants.STYLE_CATEGORY] == LMC_MOTIF_CATEGORY_NORMAL

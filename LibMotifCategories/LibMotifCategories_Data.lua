@@ -146,6 +146,9 @@ local ESOStyleData = {
 }
 lib.ESOStyleData = ESOStyleData
 
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
 -- ESO Style book IDs and their data
 -- Every motif also got a crown version with a different crownItemId, but there are some motifs which ONLY exist as
 -- crown books, like Frostcaster, Tsaesci
@@ -257,6 +260,9 @@ local ESOStyleBookData = {
     [105] = {160610, 160611, 160625, 0},                -- Ancestral Orc
 }
 lib.ESOStyleBookData = ESOStyleBookData
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
 
 
 ------------------------------------------------------------------------------------------------------------------------
@@ -275,9 +281,20 @@ lib.specialMotifs = specialMotifs
 
 
 ------------------------------------------------------------------------------------------------------------------------
+--Local helper functions
+------------------------------------------------------------------------------------------------------------------------
+-- motifItemId is the itemId which will be used to compare with table "motifIdToItemStyleLookup" 's list of itemIds
+-- which were added via "AddRange" function to this table (see initialization of the library)
+local function GetMotifItemIdByItemLink(itemLink)
+    if itemLink == nil or itemLink == "" then return -1 end
+    local motifItemId = GetItemLinkItemId(itemLink) or select(4, ZO_LinkHandler_ParseLink(itemLink))
+    return motifItemId
+end
+
+
+------------------------------------------------------------------------------------------------------------------------
 --Library functions for the data tables
 ------------------------------------------------------------------------------------------------------------------------
-
 --Update the table lib.ESOStyleData with the 4th column (lib.CONSTANTS.STYLE_MOTIF_ID) = motifId
 function lib:updateMotifNumbersOfStyles()
     --Get the motif number from an example item's name, and update it to index 4 () of table ESOStyles
