@@ -26,113 +26,117 @@ local constants                 = lib.CONSTANTS
 -- -> styleId is determined via GetValidItemStyleId(styleIndex)
 -- [styleId] = {LibMotifCategoryCategoryId styleCategory, number achievementId, number itemIdOfAnItemOfThatStyle,
 --              number motifNumber (value -1 will be replaced via function getMotifNumbersOfStyles in file
---              LibMotifCategories.lua, as the library is initialized)
+--              LibMotifCategories.lua, as the library is initialized), number APIVersionAsThisStyleWasAdded
 -- } -- name of the style in language EN
 local ESOStyleData = {
-    [1]   = {LMC_MOTIF_CATEGORY_NORMAL,1025,16425,-1},   -- Breton
-    [2]   = {LMC_MOTIF_CATEGORY_NORMAL,1025,16427,-1},   -- Redguard
-    [3]   = {LMC_MOTIF_CATEGORY_NORMAL,1025,16426,-1},   -- Orc
-    [4]   = {LMC_MOTIF_CATEGORY_NORMAL,1025,27245,-1},   -- Dark Elf
-    [5]   = {LMC_MOTIF_CATEGORY_NORMAL,1025,27244,-1},   -- Nord
-    [6]   = {LMC_MOTIF_CATEGORY_NORMAL,1025,27246,-1},   -- Argonian
-    [7]   = {LMC_MOTIF_CATEGORY_NORMAL,1025,16424,-1},   -- High Elf
-    [8]   = {LMC_MOTIF_CATEGORY_NORMAL,1025,16428,-1},   -- Wood Elf
-    [9]   = {LMC_MOTIF_CATEGORY_NORMAL,1025,44698,-1},   -- Khajiit
-    [11]  = {LMC_MOTIF_CATEGORY_EXOTIC,1423,74556,-1},   -- Thieves Guild
-    [12]  = {LMC_MOTIF_CATEGORY_EXOTIC,1661,82055,-1},   -- Dark Brotherhood
-    [13]  = {LMC_MOTIF_CATEGORY_EXOTIC,1412,71567,-1},   -- Malacath
-    [14]  = {LMC_MOTIF_CATEGORY_EXOTIC,1144,57573,-1},   -- Dwemer
-    [15]  = {LMC_MOTIF_CATEGORY_RARE,1025,51638,-1},     -- Ancient Elf
-    [16]  = {LMC_MOTIF_CATEGORY_EXOTIC,1660,82088,-1},   -- Order of the Hour / Akatosh
-    [17]  = {LMC_MOTIF_CATEGORY_RARE,1025,51565,-1},     -- Barbaric
+    [1]   = {LMC_MOTIF_CATEGORY_NORMAL,1025,16425,-1, 000000},   -- Breton
+    [2]   = {LMC_MOTIF_CATEGORY_NORMAL,1025,16427,-1, 000000},   -- Redguard
+    [3]   = {LMC_MOTIF_CATEGORY_NORMAL,1025,16426,-1, 000000},   -- Orc
+    [4]   = {LMC_MOTIF_CATEGORY_NORMAL,1025,27245,-1, 000000},   -- Dark Elf
+    [5]   = {LMC_MOTIF_CATEGORY_NORMAL,1025,27244,-1, 000000},   -- Nord
+    [6]   = {LMC_MOTIF_CATEGORY_NORMAL,1025,27246,-1, 000000},   -- Argonian
+    [7]   = {LMC_MOTIF_CATEGORY_NORMAL,1025,16424,-1, 000000},   -- High Elf
+    [8]   = {LMC_MOTIF_CATEGORY_NORMAL,1025,16428,-1, 000000},   -- Wood Elf
+    [9]   = {LMC_MOTIF_CATEGORY_NORMAL,1025,44698,-1, 000000},   -- Khajiit
+    [11]  = {LMC_MOTIF_CATEGORY_EXOTIC,1423,74556,-1, 000000},   -- Thieves Guild
+    [12]  = {LMC_MOTIF_CATEGORY_EXOTIC,1661,82055,-1, 000000},   -- Dark Brotherhood
+    [13]  = {LMC_MOTIF_CATEGORY_EXOTIC,1412,71567,-1, 000000},   -- Malacath
+    [14]  = {LMC_MOTIF_CATEGORY_EXOTIC,1144,57573,-1, 000000},   -- Dwemer
+    [15]  = {LMC_MOTIF_CATEGORY_RARE,1025,51638,-1, 000000},     -- Ancient Elf
+    [16]  = {LMC_MOTIF_CATEGORY_EXOTIC,1660,82088,-1, 000000},   -- Order of the Hour / Akatosh
+    [17]  = {LMC_MOTIF_CATEGORY_RARE,1025,51565,-1, 000000},     -- Barbaric
 -->???
-    [18]  = {LMC_MOTIF_CATEGORY_DROPPED,0,0,-1},         -- Bandit - Still exists?
+    --[18]  = {LMC_MOTIF_CATEGORY_DROPPED,0,0,-1, 000000},         -- Bandit - Still exists?
 --<???
-    [19]  = {LMC_MOTIF_CATEGORY_RARE,1025,51345,-1},     -- Primal
-    [20]  = {LMC_MOTIF_CATEGORY_RARE,1025,51688,-1},     -- Daedric
-    [21]  = {LMC_MOTIF_CATEGORY_EXOTIC,1411,71551,-1},   -- Trinimac
-    [22]  = {LMC_MOTIF_CATEGORY_EXOTIC,1341,69528,-1},   -- Ancient Orc
-    [23]  = {LMC_MOTIF_CATEGORY_ALLIANCE,1416,71705,-1}, -- Daggerfall Covenant
-    [24]  = {LMC_MOTIF_CATEGORY_ALLIANCE,1414,71721,-1}, -- Ebonheart Pact
-    [25]  = {LMC_MOTIF_CATEGORY_ALLIANCE,1415,71689,-1}, -- Aldmeri Dominion
-    [26]  = {LMC_MOTIF_CATEGORY_EXOTIC,1348,64716,-1},   -- Mercenary / Undaunted
-    [27]  = {LMC_MOTIF_CATEGORY_EXOTIC,1714,82007,-1},   -- Celestial / Raids Craglorn
-    [28]  = {LMC_MOTIF_CATEGORY_EXOTIC,1319,64670,-1},   -- Glass
-    [29]  = {LMC_MOTIF_CATEGORY_EXOTIC,1181,57835,-1},   -- Xivkyn
-    [30]  = {LMC_MOTIF_CATEGORY_RARE,1418,71765,-1},     -- Soul Shriven
-    [31]  = {LMC_MOTIF_CATEGORY_EXOTIC,1715,76895,-1},   -- Draugr
+    [19]  = {LMC_MOTIF_CATEGORY_RARE,1025,51345,-1, 000000},     -- Primal
+    [20]  = {LMC_MOTIF_CATEGORY_RARE,1025,51688,-1, 000000},     -- Daedric
+    [21]  = {LMC_MOTIF_CATEGORY_EXOTIC,1411,71551,-1, 000000},   -- Trinimac
+    [22]  = {LMC_MOTIF_CATEGORY_EXOTIC,1341,69528,-1, 000000},   -- Ancient Orc
+    [23]  = {LMC_MOTIF_CATEGORY_ALLIANCE,1416,71705,-1, 000000}, -- Daggerfall Covenant
+    [24]  = {LMC_MOTIF_CATEGORY_ALLIANCE,1414,71721,-1, 000000}, -- Ebonheart Pact
+    [25]  = {LMC_MOTIF_CATEGORY_ALLIANCE,1415,71689,-1, 000000}, -- Aldmeri Dominion
+    [26]  = {LMC_MOTIF_CATEGORY_EXOTIC,1348,64716,-1, 000000},   -- Mercenary / Undaunted
+    [27]  = {LMC_MOTIF_CATEGORY_EXOTIC,1714,82007,-1, 000000},   -- Celestial / Raids Craglorn
+    [28]  = {LMC_MOTIF_CATEGORY_EXOTIC,1319,64670,-1, 000000},   -- Glass
+    [29]  = {LMC_MOTIF_CATEGORY_EXOTIC,1181,57835,-1, 000000},   -- Xivkyn
+    [30]  = {LMC_MOTIF_CATEGORY_RARE,1418,71765,-1, 000000},     -- Soul Shriven
+    [31]  = {LMC_MOTIF_CATEGORY_EXOTIC,1715,76895,-1, 000000},   -- Draugr
 -->???
-    [32]  = {LMC_MOTIF_CATEGORY_DROPPED,0,0,-1},         -- Maormer - Still exists?
+    --[32]  = {LMC_MOTIF_CATEGORY_DROPPED,0,0,-1, 000000},         -- Maormer - Still exists?
 --<???
-    [33]  = {LMC_MOTIF_CATEGORY_EXOTIC,1318,57591,-1},   -- Akaviri
-    [34]  = {LMC_MOTIF_CATEGORY_ALLIANCE,1025,54868,-1}, -- Imperial
-    [35]  = {LMC_MOTIF_CATEGORY_EXOTIC,1713,57606,-1},   -- Yokudan
+    [33]  = {LMC_MOTIF_CATEGORY_EXOTIC,1318,57591,-1, 000000},   -- Akaviri
+    [34]  = {LMC_MOTIF_CATEGORY_ALLIANCE,1025,54868,-1, 000000}, -- Imperial
+    [35]  = {LMC_MOTIF_CATEGORY_EXOTIC,1713,57606,-1, 000000},   -- Yokudan
 -->???
-    [36]  = {LMC_MOTIF_CATEGORY_CROWN,0,0,0},            -- Universal / Crown store - Still exists?
-    [32]  = {LMC_MOTIF_CATEGORY_DROPPED,0,0,-1},         -- Barbaric Winter - Still exists?
+    --[36]  = {LMC_MOTIF_CATEGORY_CROWN,0,0,0, 000000},            -- Universal / Crown store - Still exists?
+    --[32]  = {LMC_MOTIF_CATEGORY_DROPPED,0,0,-1, 000000},         -- Barbaric Winter - Still exists?
 --<???
 
-    [38]  = {LMC_MOTIF_CATEGORY_DROPPED,0,132532,-1},    -- Tsaesci
-    [39]  = {LMC_MOTIF_CATEGORY_EXOTIC,1662,82072,-1},   -- Minotaur
-    [40]  = {LMC_MOTIF_CATEGORY_EXOTIC,1798,75229,-1},   -- Ebony
-    [41]  = {LMC_MOTIF_CATEGORY_EXOTIC,1422,74540,-1},   -- Abah's Watch
-    [42]  = {LMC_MOTIF_CATEGORY_EXOTIC,1676,73855,-1},   -- Skinchanger
-    [43]  = {LMC_MOTIF_CATEGORY_EXOTIC,1933,73839,-1},   -- Morag Tong
-    [44]  = {LMC_MOTIF_CATEGORY_EXOTIC,1797,71673,-1},   -- Ra Gada
-    [45]  = {LMC_MOTIF_CATEGORY_EXOTIC,1659,74653,-1},   -- Dro-m'Athra
-    [46]  = {LMC_MOTIF_CATEGORY_EXOTIC,1424,76879,-1},   -- Assassin's League
-    [47]  = {LMC_MOTIF_CATEGORY_EXOTIC,1417,71523,-1},   -- Outlaw
-    [48]  = {LMC_MOTIF_CATEGORY_DROPPED,2022,130011,-1}, -- Redoran
-    [49]  = {LMC_MOTIF_CATEGORY_DROPPED,2021,129995,-1}, -- Hlaalu
-    [50]  = {LMC_MOTIF_CATEGORY_EXOTIC,1935,121349,-1},  -- Militant Ordinator
-    [51]  = {LMC_MOTIF_CATEGORY_DROPPED,2023,121333,-1}, -- Telvanni
-    [52]  = {LMC_MOTIF_CATEGORY_EXOTIC,1934,121317,-1},  -- Buoyant Armiger
-    [53]  = {LMC_MOTIF_CATEGORY_CROWN,0,96954,-1},       -- Frostcaster
-    [54]  = {LMC_MOTIF_CATEGORY_EXOTIC,1932,124680,-1},  -- Ashlander
-    [55]  = {LMC_MOTIF_CATEGORY_DROPPED,2120,134740,-1}, -- Worm Cult
-    [56]  = {LMC_MOTIF_CATEGORY_EXOTIC,1796,114968,-1},  -- Silken Ring
-    [57]  = {LMC_MOTIF_CATEGORY_EXOTIC,1795,114952,-1},  -- Mazzatun
-    [58]  = {LMC_MOTIF_CATEGORY_CROWN,0,82053,-1},       -- Grim Harlequin
-    [59]  = {LMC_MOTIF_CATEGORY_EXOTIC,1545,82023,-1},   -- Hollowjack
+    [38]  = {LMC_MOTIF_CATEGORY_DROPPED,0,132532,-1, 000000},    -- Tsaesci
+    [39]  = {LMC_MOTIF_CATEGORY_EXOTIC,1662,82072,-1, 000000},   -- Minotaur
+    [40]  = {LMC_MOTIF_CATEGORY_EXOTIC,1798,75229,-1, 000000},   -- Ebony
+    [41]  = {LMC_MOTIF_CATEGORY_EXOTIC,1422,74540,-1, 000000},   -- Abah's Watch
+    [42]  = {LMC_MOTIF_CATEGORY_EXOTIC,1676,73855,-1, 000000},   -- Skinchanger
+    [43]  = {LMC_MOTIF_CATEGORY_EXOTIC,1933,73839,-1, 000000},   -- Morag Tong
+    [44]  = {LMC_MOTIF_CATEGORY_EXOTIC,1797,71673,-1, 000000},   -- Ra Gada
+    [45]  = {LMC_MOTIF_CATEGORY_EXOTIC,1659,74653,-1, 000000},   -- Dro-m'Athra
+    [46]  = {LMC_MOTIF_CATEGORY_EXOTIC,1424,76879,-1, 000000},   -- Assassin's League
+    [47]  = {LMC_MOTIF_CATEGORY_EXOTIC,1417,71523,-1, 000000},   -- Outlaw
+    [48]  = {LMC_MOTIF_CATEGORY_DROPPED,2022,130011,-1, 000000}, -- Redoran
+    [49]  = {LMC_MOTIF_CATEGORY_DROPPED,2021,129995,-1, 000000}, -- Hlaalu
+    [50]  = {LMC_MOTIF_CATEGORY_EXOTIC,1935,121349,-1, 000000},  -- Militant Ordinator
+    [51]  = {LMC_MOTIF_CATEGORY_DROPPED,2023,121333,-1, 000000}, -- Telvanni
+    [52]  = {LMC_MOTIF_CATEGORY_EXOTIC,1934,121317,-1, 000000},  -- Buoyant Armiger
+    [53]  = {LMC_MOTIF_CATEGORY_CROWN,0,96954,-1, 000000},       -- Frostcaster
+    [54]  = {LMC_MOTIF_CATEGORY_EXOTIC,1932,124680,-1, 000000},  -- Ashlander
+    [55]  = {LMC_MOTIF_CATEGORY_DROPPED,2120,134740,-1, 000000}, -- Worm Cult
+    [56]  = {LMC_MOTIF_CATEGORY_EXOTIC,1796,114968,-1, 000000},  -- Silken Ring
+    [57]  = {LMC_MOTIF_CATEGORY_EXOTIC,1795,114952,-1, 000000},  -- Mazzatun
+    [58]  = {LMC_MOTIF_CATEGORY_CROWN,0,82053,-1, 000000},       -- Grim Harlequin
+    [59]  = {LMC_MOTIF_CATEGORY_EXOTIC,1545,82023,-1, 000000},   -- Hollowjack
 ------------------------------------------------------------------------------------------------------------------------
 -- NEW STYLES BELOW! ADDED AFTER LAST LibMotifCategories Update - since version 2
 ---------------------------------------------------------------------------------------------------------------------------
-    [60]  = {2,2024,130027,-1},  -- Refabricated
-    [61]  = {2,2098,132534,-1},  -- Bloodforge
-    [62]  = {2,2097,132566,-1},  -- Dreadhorn
-    [65]  = {2,2044,132550,-1},  -- Apostle
-    [66]  = {2,2045,132582,-1},  -- Ebonshadow
-    [69]  = {2,2190,134756,-1},  -- Fang Lair
-    [70]  = {2,2189,134772,-1},  -- Scalecaller
-    [71]  = {2,2186,137852,-1},  -- Psijic Order
-    [72]  = {2,2187,137921,-1},  -- Sapiarch
-    [73]  = {2,2319,140497,-1},  -- Welkynar
-    [74]  = {2,2188,140445,-1},  -- Dremora
-    [75]  = {2,2285,140429,-1},  -- Pyandonean
-    [77]  = {2,2317,140463,-1},  -- Huntsman
-    [78]  = {2,2318,140479,-1},  -- Silver Dawn
-    [79]  = {2,2360,142203,-1},  -- Dead-Water
-    [80]  = {2,2359,142187,-1},  -- Honor Guard
-    [81]  = {2,2361,142219,-1},  -- Elder Argonian
-    [82]  = {2,2503,147667,-1},  -- Coldsnap
-    [83]  = {2,2504,147683,-1},  -- Meridian
-    [84]  = {2,2505,147699,-1},  -- Anequina
-    [85]  = {2,2506,147715,-1},  -- Pellitine
-    [86]  = {2,2507,147731,-1},  -- Sunspire
-    [89]  = {2,2629,156574,-1},  -- Stags of Z'en
-    [92]  = {2,2630,156556,-1},  -- Dragonguard
-    [93]  = {2,2628,156591,-1},  -- Moongrave Fane
-    [94]  = {2,2748,156609,-1},  -- New Moon
-    [95]  = {2,2750,156628,-1},  -- Shield of Senchal
-    [97]  = {2,2747,157518,-1},  -- Icereach Coven
-    [98]  = {2,2749,158292,-1},  -- Pyre Watch
-    --[99] = {2,?,?,-1},        -- Swordthane
-    [100] = {2,2757,160494,-1}, -- Blackreach Vanguard
-    --[101] = {2,?,?,-1},       -- Greymoor
-    --[102] = {2,?,?,-1},       -- Sea Giant
-    [103] = {2,2763,160577,-1}, -- Ancestral Nord
-    [104] = {2,2773,160594,-1}, -- Ancestral High Elf
-    [105] = {2,2776,160611,-1}, -- Ancestral Orc
+    [60]  = {LMC_MOTIF_CATEGORY_EXOTIC,2024,130027,-1, 000000},  -- Refabricated
+    [61]  = {LMC_MOTIF_CATEGORY_EXOTIC,2098,132534,-1, 000000},  -- Bloodforge
+    [62]  = {LMC_MOTIF_CATEGORY_EXOTIC,2097,132566,-1, 000000},  -- Dreadhorn
+    [65]  = {LMC_MOTIF_CATEGORY_EXOTIC,2044,132550,-1, 000000},  -- Apostle
+    [66]  = {LMC_MOTIF_CATEGORY_EXOTIC,2045,132582,-1, 000000},  -- Ebonshadow
+    [69]  = {LMC_MOTIF_CATEGORY_EXOTIC,2190,134756,-1, 000000},  -- Fang Lair
+    [70]  = {LMC_MOTIF_CATEGORY_EXOTIC,2189,134772,-1, 000000},  -- Scalecaller
+    [71]  = {LMC_MOTIF_CATEGORY_EXOTIC,2186,137852,-1, 000000},  -- Psijic Order
+    [72]  = {LMC_MOTIF_CATEGORY_EXOTIC,2187,137921,-1, 000000},  -- Sapiarch
+    [73]  = {LMC_MOTIF_CATEGORY_EXOTIC,2319,140497,-1, 000000},  -- Welkynar
+    [74]  = {LMC_MOTIF_CATEGORY_EXOTIC,2188,140445,-1, 000000},  -- Dremora
+    [75]  = {LMC_MOTIF_CATEGORY_EXOTIC,2285,140429,-1, 000000},  -- Pyandonean
+    [77]  = {LMC_MOTIF_CATEGORY_EXOTIC,2317,140463,-1, 000000},  -- Huntsman
+    [78]  = {LMC_MOTIF_CATEGORY_EXOTIC,2318,140479,-1, 000000},  -- Silver Dawn
+    [79]  = {LMC_MOTIF_CATEGORY_EXOTIC,2360,142203,-1, 000000},  -- Dead-Water
+    [80]  = {LMC_MOTIF_CATEGORY_EXOTIC,2359,142187,-1, 000000},  -- Honor Guard
+    [81]  = {LMC_MOTIF_CATEGORY_EXOTIC,2361,142219,-1, 000000},  -- Elder Argonian
+    [82]  = {LMC_MOTIF_CATEGORY_EXOTIC,2503,147667,-1, 000000},  -- Coldsnap
+    [83]  = {LMC_MOTIF_CATEGORY_EXOTIC,2504,147683,-1, 000000},  -- Meridian
+    [84]  = {LMC_MOTIF_CATEGORY_EXOTIC,2505,147699,-1, 000000},  -- Anequina
+    [85]  = {LMC_MOTIF_CATEGORY_EXOTIC,2506,147715,-1, 000000},  -- Pellitine
+    [86]  = {LMC_MOTIF_CATEGORY_EXOTIC,2507,147731,-1, 000000},  -- Sunspire
+    [89]  = {LMC_MOTIF_CATEGORY_EXOTIC,2629,156574,-1, 000000},  -- Stags of Z'en
+    [92]  = {LMC_MOTIF_CATEGORY_EXOTIC,2630,156556,-1, 000000},  -- Dragonguard
+    [93]  = {LMC_MOTIF_CATEGORY_EXOTIC,2628,156591,-1, 000000},  -- Moongrave Fane
+    [94]  = {LMC_MOTIF_CATEGORY_EXOTIC,2748,156609,-1, 000000},  -- New Moon
+    [95]  = {LMC_MOTIF_CATEGORY_EXOTIC,2750,156628,-1, 000000},  -- Shield of Senchal
+    [97]  = {LMC_MOTIF_CATEGORY_EXOTIC,2747,157518,-1, 000000},  -- Icereach Coven
+    [98]  = {LMC_MOTIF_CATEGORY_EXOTIC,2749,158292,-1, 000000},  -- Pyre Watch
+-->???
+    --[99] = {LMC_MOTIF_CATEGORY_EXOTIC,?,?,-1, 000000},        -- Swordthane
+--<???
+    [100] = {LMC_MOTIF_CATEGORY_EXOTIC,2757,160494,-1, 000000}, -- Blackreach Vanguard
+-->???
+    --[101] = {LMC_MOTIF_CATEGORY_EXOTIC,?,?,-1, 000000},       -- Greymoor
+    --[102] = {LMC_MOTIF_CATEGORY_EXOTIC,?,?,-1, 000000},       -- Sea Giant
+--<???
+    [103] = {LMC_MOTIF_CATEGORY_EXOTIC,2763,160577,-1, 000000}, -- Ancestral Nord
+    [104] = {LMC_MOTIF_CATEGORY_EXOTIC,2773,160594,-1, 000000}, -- Ancestral High Elf
+    [105] = {LMC_MOTIF_CATEGORY_EXOTIC,2776,160611,-1, 000000}, -- Ancestral Orc
 }
 lib.ESOStyleData = ESOStyleData
 
@@ -298,20 +302,21 @@ local categoryLookup = {
 lib.categoryLookup = categoryLookup
 
 --The lookup table for the "new" itemStyles (added later to the game) to category
---TODO: Maybe change this to only define the last added items (per APIversion) as "new"?
+--When was the last time the tables were changed? "New" means since last APIversion check was done and saved in
+--lib.lastAPIVersionBaseForNewCheck. All higher APIVersions count as new!
 local newLookup = {
     --Dropped
-    [ITEMSTYLE_AREA_TSAESCI] = LMC_MOTIF_CATEGORY_DROPPED,
-    [ITEMSTYLE_ORG_REDORAN] = LMC_MOTIF_CATEGORY_DROPPED,
-    [ITEMSTYLE_ORG_HLAALU] = LMC_MOTIF_CATEGORY_DROPPED,
-    [ITEMSTYLE_ORG_TELVANNI] = LMC_MOTIF_CATEGORY_DROPPED,
-    [ITEMSTYLE_ORG_WORM_CULT] = LMC_MOTIF_CATEGORY_DROPPED,
+    [ITEMSTYLE_AREA_TSAESCI]            = LMC_MOTIF_CATEGORY_DROPPED,
+    [ITEMSTYLE_ORG_REDORAN]             = LMC_MOTIF_CATEGORY_DROPPED,
+    [ITEMSTYLE_ORG_HLAALU]              = LMC_MOTIF_CATEGORY_DROPPED,
+    [ITEMSTYLE_ORG_TELVANNI]            = LMC_MOTIF_CATEGORY_DROPPED,
+    [ITEMSTYLE_ORG_WORM_CULT]           = LMC_MOTIF_CATEGORY_DROPPED,
 
     --Exotic
-    [ITEMSTYLE_ORG_MORAG_TONG] = LMC_MOTIF_CATEGORY_EXOTIC,
-    [ITEMSTYLE_ORG_ORDINATOR] = LMC_MOTIF_CATEGORY_EXOTIC,
-    [ITEMSTYLE_ORG_BUOYANT_ARMIGER] = LMC_MOTIF_CATEGORY_EXOTIC,
-    [ITEMSTYLE_AREA_ASHLANDER] = LMC_MOTIF_CATEGORY_EXOTIC,
+    [ITEMSTYLE_ORG_MORAG_TONG]          = LMC_MOTIF_CATEGORY_EXOTIC,
+    [ITEMSTYLE_ORG_ORDINATOR]           = LMC_MOTIF_CATEGORY_EXOTIC,
+    [ITEMSTYLE_ORG_BUOYANT_ARMIGER]     = LMC_MOTIF_CATEGORY_EXOTIC,
+    [ITEMSTYLE_AREA_ASHLANDER]          = LMC_MOTIF_CATEGORY_EXOTIC,
 
     --TODO: Add new ones for all the DLCs after Worm Cult etc.
 }

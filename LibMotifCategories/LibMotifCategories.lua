@@ -28,9 +28,9 @@ local newLookup                 = lib.newLookup
 --Local helper functions
 ------------------------------------------------------------------------------------------------------------------------
 local function getMaxItemStyleId()
-    local maxItemStyleId = (GetHighestItemStyleId ~= nil and GetHighestItemStyleId())
-                            or (ITEMSTYLE_MAX_VALUE ~= nil and ITEMSTYLE_MAX_VALUE)
-                            or ITEMSTYLE_HOLIDAY_HOLLOWJACK
+    local maxItemStyleId = GetHighestItemStyleId()
+    local maxAlternativeValue = GetNumValidItemStyles()
+    if maxAlternativeValue > maxItemStyleId then maxItemStyleId = maxAlternativeValue end
     return maxItemStyleId
 end
 
@@ -136,6 +136,9 @@ end
 
 
 --Is this item's motif a later added (new) one?
+--"New" means it was added after the APIVersion saved in lib.lastAPIVersionBaseForNewCheck
+-->Entries added later will be added to table lib.newLookup automatically at the start of the addon,
+-->based on the APIVersionAdded parameter 5 in table lib.ESOStyleData[5]
 function lib:IsNewMotif(itemLink)
     local itemStyle = motifIdToItemStyleLookup:GetItemStyle(itemLink)
     if itemStyle == -1 then return false end

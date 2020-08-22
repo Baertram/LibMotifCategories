@@ -17,6 +17,13 @@ lib.version = MINOR
 
 
 ------------------------------------------------------------------------------------------------------------------------
+-- When was the data table updated the last time, so what is the "comparison APIVersion for the new" checks?
+------------------------------------------------------------------------------------------------------------------------
+local lastAPIVersionBaseForNewCheck = '100031' -- Greymoor
+lib.lastAPIVersionBaseForNewCheck = lastAPIVersionBaseForNewCheck
+
+
+------------------------------------------------------------------------------------------------------------------------
 -- Global constants
 ------------------------------------------------------------------------------------------------------------------------
 LMC_MOTIF_CATEGORY_NORMAL   = 1
