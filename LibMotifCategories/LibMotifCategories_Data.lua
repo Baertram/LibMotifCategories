@@ -38,6 +38,7 @@ local ESOStyleData = {
     [7]   = {LMC_MOTIF_CATEGORY_NORMAL,1025,16424,-1, 000000},   -- High Elf
     [8]   = {LMC_MOTIF_CATEGORY_NORMAL,1025,16428,-1, 000000},   -- Wood Elf
     [9]   = {LMC_MOTIF_CATEGORY_NORMAL,1025,44698,-1, 000000},   -- Khajiit
+
     [11]  = {LMC_MOTIF_CATEGORY_EXOTIC,1423,74556,-1, 000000},   -- Thieves Guild
     [12]  = {LMC_MOTIF_CATEGORY_EXOTIC,1661,82055,-1, 000000},   -- Dark Brotherhood
     [13]  = {LMC_MOTIF_CATEGORY_EXOTIC,1412,71567,-1, 000000},   -- Malacath
@@ -69,7 +70,7 @@ local ESOStyleData = {
     [35]  = {LMC_MOTIF_CATEGORY_EXOTIC,1713,57606,-1, 000000},   -- Yokudan
 -->???
     --[36]  = {LMC_MOTIF_CATEGORY_CROWN,0,0,0, 000000},            -- Universal / Crown store - Still exists?
-    --[32]  = {LMC_MOTIF_CATEGORY_DROPPED,0,0,-1, 000000},         -- Barbaric Winter - Still exists?
+    --[37]  = {LMC_MOTIF_CATEGORY_DROPPED,0,0,-1, 000000},         -- Barbaric Winter - Still exists?
 --<???
 
     [38]  = {LMC_MOTIF_CATEGORY_DROPPED,0,132532,-1, 000000},    -- Tsaesci
@@ -100,8 +101,10 @@ local ESOStyleData = {
     [60]  = {LMC_MOTIF_CATEGORY_EXOTIC,2024,130027,-1, 000000},  -- Refabricated
     [61]  = {LMC_MOTIF_CATEGORY_EXOTIC,2098,132534,-1, 000000},  -- Bloodforge
     [62]  = {LMC_MOTIF_CATEGORY_EXOTIC,2097,132566,-1, 000000},  -- Dreadhorn
+
     [65]  = {LMC_MOTIF_CATEGORY_EXOTIC,2044,132550,-1, 000000},  -- Apostle
     [66]  = {LMC_MOTIF_CATEGORY_EXOTIC,2045,132582,-1, 000000},  -- Ebonshadow
+
     [69]  = {LMC_MOTIF_CATEGORY_EXOTIC,2190,134756,-1, 000000},  -- Fang Lair
     [70]  = {LMC_MOTIF_CATEGORY_EXOTIC,2189,134772,-1, 000000},  -- Scalecaller
     [71]  = {LMC_MOTIF_CATEGORY_EXOTIC,2186,137852,-1, 000000},  -- Psijic Order
@@ -119,11 +122,14 @@ local ESOStyleData = {
     [84]  = {LMC_MOTIF_CATEGORY_EXOTIC,2505,147699,-1, 000000},  -- Anequina
     [85]  = {LMC_MOTIF_CATEGORY_EXOTIC,2506,147715,-1, 000000},  -- Pellitine
     [86]  = {LMC_MOTIF_CATEGORY_EXOTIC,2507,147731,-1, 000000},  -- Sunspire
+
     [89]  = {LMC_MOTIF_CATEGORY_EXOTIC,2629,156574,-1, 000000},  -- Stags of Z'en
+
     [92]  = {LMC_MOTIF_CATEGORY_EXOTIC,2630,156556,-1, 000000},  -- Dragonguard
     [93]  = {LMC_MOTIF_CATEGORY_EXOTIC,2628,156591,-1, 000000},  -- Moongrave Fane
     [94]  = {LMC_MOTIF_CATEGORY_EXOTIC,2748,156609,-1, 000000},  -- New Moon
     [95]  = {LMC_MOTIF_CATEGORY_EXOTIC,2750,156628,-1, 000000},  -- Shield of Senchal
+
     [97]  = {LMC_MOTIF_CATEGORY_EXOTIC,2747,157518,-1, 000000},  -- Icereach Coven
     [98]  = {LMC_MOTIF_CATEGORY_EXOTIC,2749,158292,-1, 000000},  -- Pyre Watch
 -->???
@@ -141,6 +147,8 @@ local ESOStyleData = {
 lib.ESOStyleData = ESOStyleData
 
 -- ESO Style book IDs and their data
+-- Every motif also got a crown version with a different crownItemId, but there are some motifs which ONLY exist as
+-- crown books, like Frostcaster, Tsaesci
 -- -> styleId is determined via GetValidItemStyleId(styleIndex)
 -- [styleId] = {number bookId, number chapterNumber, number crownBookId, number crownChapterNumber
 -- } -- name of the style in language EN
@@ -154,6 +162,7 @@ local ESOStyleBookData = {
     [7]   = {16424 , 0     , 64540 , 0},                -- High Elf
     [8]   = {16428 , 0     , 64544 , 0},                -- Wood Elf
     [9]   = {44698 , 0     , 64548 , 0},                -- Khajiit
+
     [11]  = {74555 , 74556 , 74570 , 0},                -- Thieves Guild
     [12]  = {82054 , 82055 , 82069 , 0},                -- Dark Brotherhood
     [13]  = {71566 , 71567 , 71581 , 0},                -- Malacath
@@ -161,6 +170,7 @@ local ESOStyleBookData = {
     [15]  = {51638 , 0     , 64551 , 0},                -- Ancient Elf
     [16]  = {82087 , 82088 , 82102 , 0},                -- Order of the Hour
     [17]  = {51565 , 0     , 64550 , 0},                -- Barbaric
+
     [19]  = {51345 , 0     , 64549 , 0},                -- Primal
     [20]  = {51688 , 0     , 64552 , 0},                -- Daedric
     [21]  = {71550 , 71551 , 71565 , 0},                -- Trinimac
@@ -174,10 +184,11 @@ local ESOStyleBookData = {
     [29]  = {57834 , 57835 , 64556 , 0},                -- Xivkyn
     [30]  = {71765 , 0     , 0     , 0},                -- Soul Shriven
     [31]  = {76894 , 76895 , 76909 , 0},                -- Draugr
+
     [33]  = {57590 , 57591 , 64554 , 0},                -- Akaviri
     [34]  = {54868 , 0     , 64559 , 0},                -- Imperial
     [35]  = {57605 , 57606 , 64555 , 0},                -- Yokudan
-    --[36]  = {-1,-1,-1,-1},                            -- Universal
+
     [38]  = {0     , 0     , 132532, 0},                -- Tsaesci
     [39]  = {82071 , 82072 , 82086 , 0},                -- Minotaur
     [40]  = {75228 , 75229 , 75243 , 0},                -- Ebony
@@ -206,8 +217,10 @@ local ESOStyleBookData = {
     [60]  = {130026, 130027, 130041, 0},                -- Refabricated
     [61]  = {132533, 132534, 132548, 0},                -- Bloodforge
     [62]  = {132565, 132566, 132580, 0},                -- Dreadhorn
+
     [65]  = {132549, 132550, 132564, 0},                -- Apostle
     [66]  = {132581, 132582, 132596, 0},                -- Ebonshadow
+
     [69]  = {134755, 134756, 134770, 0},                -- Fang Lair
     [70]  = {134771, 134772, 134786, 0},                -- Scalecaller
     [71]  = {137851, 137852, 137866, 0},                -- Psijic Order
@@ -215,6 +228,7 @@ local ESOStyleBookData = {
     [73]  = {140496, 140497, 140511, 0},                -- Welkynar
     [74]  = {140444, 140445, 140459, 0},                -- Dremora
     [75]  = {140428, 140429, 139055, 140268},           -- Pyandonean
+
     [77]  = {140462, 140463, 140477, 0},                -- Huntsman
     [78]  = {140478, 140479, 140493, 0},                -- Silver Dawn
     [79]  = {142202, 142203, 142217, 0},                -- Dead-Water
@@ -225,19 +239,39 @@ local ESOStyleBookData = {
     [84]  = {147698, 147699, 147713, 0},                -- Anequina
     [85]  = {147714, 147715, 147729, 0},                -- Pellitine
     [86]  = {147730, 147731, 147745, 0},                -- Sunspire
+
     [89]  = {156573, 156574, 156588, 0},                -- Stags of Z'en
+
     [92]  = {156555, 156556, 156570, 0},                -- Dragonguard
     [93]  = {156590, 156591, 156605, 0},                -- Moongrave Fane
     [94]  = {156608, 156609, 156623, 0},                -- New Moon
     [95]  = {156627, 156628, 156642, 0},                -- Shield of Senchal
+
     [97]  = {157517, 157518, 157532, 0},                -- Icereach Coven
     [98]  = {158291, 158292, 158306, 0},                -- Pyre Watch
+
     [100] = {160493, 160494, 160508, 0},                -- Blackreach Vanguard
+
     [103] = {160576, 160577, 160591, 0},                -- Ancestral Nord
     [104] = {160593, 160594, 160608, 0},                -- Ancestral High Elf
     [105] = {160610, 160611, 160625, 0},                -- Ancestral Orc
 }
 lib.ESOStyleBookData = ESOStyleBookData
+
+
+------------------------------------------------------------------------------------------------------------------------
+--Library "special" motif data
+------------------------------------------------------------------------------------------------------------------------
+
+-- Special motifs.
+-- e.g. some motifs do not have a non-crown version
+-- or there are several styleIds which all relate to the same motif
+local specialMotifs = {
+    crownOnly           = {},
+    multipleAreTheSame  = {},
+}
+lib.specialMotifs = specialMotifs
+--Fill the special motifs table dynamically in function "lib:addItemIdsOfStylesToInternalLookupTables()"
 
 
 ------------------------------------------------------------------------------------------------------------------------
@@ -292,6 +326,7 @@ local motifIdToItemStyleLookup = {
 }
 lib.motifIdToItemStyleLookup = motifIdToItemStyleLookup
 
+
 --The lookup table for the itemStyle to category
 local categoryLookup = {
     --Set the itemstyle none category
@@ -300,6 +335,7 @@ local categoryLookup = {
     --Other table contents will be filled dynamically from function "lib:addItemIdsOfStylesToInternalLookupTables()"
 }
 lib.categoryLookup = categoryLookup
+
 
 --The lookup table for the "new" itemStyles (added later to the game) to category
 --When was the last time the tables were changed? "New" means since last APIversion check was done and saved in
@@ -393,6 +429,8 @@ function lib:addItemIdsOfStylesToInternalLookupTables()
 
     ITEMSTYLE_MIN_VALUE                 = 1
     ITEMSTYLE_MAX_VALUE                 = GetHighestItemStyleId()
+    --> All newer item styles DO NOT HAVE a dedicated constant anymore and are ONLY accessible via their styleId
+    --> which hopefully will not change!
     ]]
 
     --The APIVersion the data tables were updated the last time, and thus new added styleIds are marked as "new"
@@ -421,6 +459,16 @@ function lib:addItemIdsOfStylesToInternalLookupTables()
                     if lastAPIVersionBaseForNewCheck > 0
                         and tonumber(styleData[constants.STYLE_APIVERSION]) > lastAPIVersionBaseForNewCheck then
                         newLookup[styleId] = LibMotifCategoriesCategory
+                    end
+
+                    --Fill the special motifs table if necessary
+                    local bookItemId        = styleBookData[constants.STYLE_BOOK_ITEM_ID]
+                    local bookChapterItemId = styleBookData[constants.STYLE_BOOK_CHAPTER_ITEM_ID]
+                    local crownBookItemId   = styleBookData[constants.STYLE_BOOK_CROWN_ITEM_ID]
+                    --Only the crown book itemId is given? -> Crown motif ONLY
+                    if bookItemId and bookItemId == 0 and bookChapterItemId and bookChapterItemId == 0
+                        and crownBookItemId and crownBookItemId > 0 then
+                        specialMotifs.crownOnly[styleId] = true
                     end
                 end
             end
