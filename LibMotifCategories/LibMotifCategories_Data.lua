@@ -8,6 +8,13 @@ if not lib or lib.version == nil then
     return
 end
 
+
+------------------------------------------------------------------------------------------------------------------------
+--Local variables
+------------------------------------------------------------------------------------------------------------------------
+local constants                 = lib.CONSTANTS
+
+
 ------------------------------------------------------------------------------------------------------------------------
 -- Data for styles, stylebooks, etc.
 ------------------------------------------------------------------------------------------------------------------------
@@ -31,51 +38,65 @@ local ESOStyleData = {
     [7]   = {LMC_MOTIF_CATEGORY_NORMAL,1025,16424,-1},   -- High Elf
     [8]   = {LMC_MOTIF_CATEGORY_NORMAL,1025,16428,-1},   -- Wood Elf
     [9]   = {LMC_MOTIF_CATEGORY_NORMAL,1025,44698,-1},   -- Khajiit
-    [11]  = {2,1423,74556,-1},   -- Thieves Guild
-    [12]  = {2,1661,82055,-1},   -- Dark Brotherhood
-    [13]  = {2,1412,71567,-1},   -- Malacath
-    [14]  = {2,1144,57573,-1},   -- Dwemer
-    [15]  = {LMC_MOTIF_CATEGORY_NORMAL,1025,51638,-1},   -- Ancient Elf
-    [16]  = {2,1660,82088,-1},   -- Order of the Hour
-    [17]  = {LMC_MOTIF_CATEGORY_NORMAL,1025,51565,-1},   -- Barbaric
-    [19]  = {LMC_MOTIF_CATEGORY_NORMAL,1025,51345,-1},   -- Primal
-    [20]  = {LMC_MOTIF_CATEGORY_NORMAL,1025,51688,-1},   -- Daedric
-    [21]  = {2,1411,71551,-1},   -- Trinimac
-    [22]  = {2,1341,69528,-1},   -- Ancient Orc
-    [23]  = {2,1416,71705,-1},   -- Daggerfall Covenant
-    [24]  = {2,1414,71721,-1},   -- Ebonheart Pact
-    [25]  = {2,1415,71689,-1},   -- Aldmeri Dominion
-    [26]  = {2,1348,64716,-1},   -- Mercenary
-    [27]  = {2,1714,82007,-1},   -- Celestial
-    [28]  = {2,1319,64670,-1},   -- Glass
-    [29]  = {2,1181,57835,-1},   -- Xivkyn
-    [30]  = {LMC_MOTIF_CATEGORY_NORMAL,1418,71765,-1},   -- Soul Shriven
-    [31]  = {2,1715,76895,-1},   -- Draugr
-    [33]  = {2,1318,57591,-1},   -- Akaviri
-    [34]  = {LMC_MOTIF_CATEGORY_NORMAL,1025,54868,-1},   -- Imperial
-    [35]  = {2,1713,57606,-1},   -- Yokudan
-    [38]  = {LMC_MOTIF_CATEGORY_CROWN,0,132532,-1},     -- Tsaesci
-    [39]  = {2,1662,82072,-1},   -- Minotaur
-    [40]  = {2,1798,75229,-1},   -- Ebony
-    [41]  = {2,1422,74540,-1},   -- Abah's Watch
-    [42]  = {2,1676,73855,-1},   -- Skinchanger
-    [43]  = {2,1933,73839,-1},   -- Morag Tong
-    [44]  = {2,1797,71673,-1},   -- Ra Gada
-    [45]  = {2,1659,74653,-1},   -- Dro-m'Athra
-    [46]  = {2,1424,76879,-1},   -- Assassin's League
-    [47]  = {2,1417,71523,-1},   -- Outlaw
-    [48]  = {2,2022,130011,-1},  -- Redoran
-    [49]  = {2,2021,129995,-1},  -- Hlaalu
-    [50]  = {2,1935,121349,-1},  -- Militant Ordinator
-    [51]  = {2,2023,121333,-1},  -- Telvanni
-    [52]  = {2,1934,121317,-1},  -- Buoyant Armiger
-    [53]  = {LMC_MOTIF_CATEGORY_CROWN,0,96954,-1},      -- Frostcaster
-    [54]  = {2,1932,124680,-1},  -- Ashlander
-    [55]  = {2,2120,134740,-1},  -- Worm Cult
-    [56]  = {2,1796,114968,-1},  -- Silken Ring
-    [57]  = {2,1795,114952,-1},  -- Mazzatun
-    [58]  = {LMC_MOTIF_CATEGORY_CROWN,0,82053,-1},      -- Grim Harlequin
-    [59]  = {2,1545,82023,-1},   -- Hollowjack
+    [11]  = {LMC_MOTIF_CATEGORY_EXOTIC,1423,74556,-1},   -- Thieves Guild
+    [12]  = {LMC_MOTIF_CATEGORY_EXOTIC,1661,82055,-1},   -- Dark Brotherhood
+    [13]  = {LMC_MOTIF_CATEGORY_EXOTIC,1412,71567,-1},   -- Malacath
+    [14]  = {LMC_MOTIF_CATEGORY_EXOTIC,1144,57573,-1},   -- Dwemer
+    [15]  = {LMC_MOTIF_CATEGORY_RARE,1025,51638,-1},     -- Ancient Elf
+    [16]  = {LMC_MOTIF_CATEGORY_EXOTIC,1660,82088,-1},   -- Order of the Hour / Akatosh
+    [17]  = {LMC_MOTIF_CATEGORY_RARE,1025,51565,-1},     -- Barbaric
+-->???
+    [18]  = {LMC_MOTIF_CATEGORY_DROPPED,0,0,-1},         -- Bandit - Still exists?
+--<???
+    [19]  = {LMC_MOTIF_CATEGORY_RARE,1025,51345,-1},     -- Primal
+    [20]  = {LMC_MOTIF_CATEGORY_RARE,1025,51688,-1},     -- Daedric
+    [21]  = {LMC_MOTIF_CATEGORY_EXOTIC,1411,71551,-1},   -- Trinimac
+    [22]  = {LMC_MOTIF_CATEGORY_EXOTIC,1341,69528,-1},   -- Ancient Orc
+    [23]  = {LMC_MOTIF_CATEGORY_ALLIANCE,1416,71705,-1}, -- Daggerfall Covenant
+    [24]  = {LMC_MOTIF_CATEGORY_ALLIANCE,1414,71721,-1}, -- Ebonheart Pact
+    [25]  = {LMC_MOTIF_CATEGORY_ALLIANCE,1415,71689,-1}, -- Aldmeri Dominion
+    [26]  = {LMC_MOTIF_CATEGORY_EXOTIC,1348,64716,-1},   -- Mercenary / Undaunted
+    [27]  = {LMC_MOTIF_CATEGORY_EXOTIC,1714,82007,-1},   -- Celestial / Raids Craglorn
+    [28]  = {LMC_MOTIF_CATEGORY_EXOTIC,1319,64670,-1},   -- Glass
+    [29]  = {LMC_MOTIF_CATEGORY_EXOTIC,1181,57835,-1},   -- Xivkyn
+    [30]  = {LMC_MOTIF_CATEGORY_RARE,1418,71765,-1},     -- Soul Shriven
+    [31]  = {LMC_MOTIF_CATEGORY_EXOTIC,1715,76895,-1},   -- Draugr
+-->???
+    [32]  = {LMC_MOTIF_CATEGORY_DROPPED,0,0,-1},         -- Maormer - Still exists?
+--<???
+    [33]  = {LMC_MOTIF_CATEGORY_EXOTIC,1318,57591,-1},   -- Akaviri
+    [34]  = {LMC_MOTIF_CATEGORY_ALLIANCE,1025,54868,-1}, -- Imperial
+    [35]  = {LMC_MOTIF_CATEGORY_EXOTIC,1713,57606,-1},   -- Yokudan
+-->???
+    [36]  = {LMC_MOTIF_CATEGORY_CROWN,0,0,0},            -- Universal / Crown store - Still exists?
+    [32]  = {LMC_MOTIF_CATEGORY_DROPPED,0,0,-1},         -- Barbaric Winter - Still exists?
+--<???
+
+    [38]  = {LMC_MOTIF_CATEGORY_DROPPED,0,132532,-1},    -- Tsaesci
+    [39]  = {LMC_MOTIF_CATEGORY_EXOTIC,1662,82072,-1},   -- Minotaur
+    [40]  = {LMC_MOTIF_CATEGORY_EXOTIC,1798,75229,-1},   -- Ebony
+    [41]  = {LMC_MOTIF_CATEGORY_EXOTIC,1422,74540,-1},   -- Abah's Watch
+    [42]  = {LMC_MOTIF_CATEGORY_EXOTIC,1676,73855,-1},   -- Skinchanger
+    [43]  = {LMC_MOTIF_CATEGORY_EXOTIC,1933,73839,-1},   -- Morag Tong
+    [44]  = {LMC_MOTIF_CATEGORY_EXOTIC,1797,71673,-1},   -- Ra Gada
+    [45]  = {LMC_MOTIF_CATEGORY_EXOTIC,1659,74653,-1},   -- Dro-m'Athra
+    [46]  = {LMC_MOTIF_CATEGORY_EXOTIC,1424,76879,-1},   -- Assassin's League
+    [47]  = {LMC_MOTIF_CATEGORY_EXOTIC,1417,71523,-1},   -- Outlaw
+    [48]  = {LMC_MOTIF_CATEGORY_DROPPED,2022,130011,-1}, -- Redoran
+    [49]  = {LMC_MOTIF_CATEGORY_DROPPED,2021,129995,-1}, -- Hlaalu
+    [50]  = {LMC_MOTIF_CATEGORY_EXOTIC,1935,121349,-1},  -- Militant Ordinator
+    [51]  = {LMC_MOTIF_CATEGORY_DROPPED,2023,121333,-1}, -- Telvanni
+    [52]  = {LMC_MOTIF_CATEGORY_EXOTIC,1934,121317,-1},  -- Buoyant Armiger
+    [53]  = {LMC_MOTIF_CATEGORY_CROWN,0,96954,-1},       -- Frostcaster
+    [54]  = {LMC_MOTIF_CATEGORY_EXOTIC,1932,124680,-1},  -- Ashlander
+    [55]  = {LMC_MOTIF_CATEGORY_DROPPED,2120,134740,-1}, -- Worm Cult
+    [56]  = {LMC_MOTIF_CATEGORY_EXOTIC,1796,114968,-1},  -- Silken Ring
+    [57]  = {LMC_MOTIF_CATEGORY_EXOTIC,1795,114952,-1},  -- Mazzatun
+    [58]  = {LMC_MOTIF_CATEGORY_CROWN,0,82053,-1},       -- Grim Harlequin
+    [59]  = {LMC_MOTIF_CATEGORY_EXOTIC,1545,82023,-1},   -- Hollowjack
+------------------------------------------------------------------------------------------------------------------------
+-- NEW STYLES BELOW! ADDED AFTER LAST LibMotifCategories Update - since version 2
+---------------------------------------------------------------------------------------------------------------------------
     [60]  = {2,2024,130027,-1},  -- Refabricated
     [61]  = {2,2098,132534,-1},  -- Bloodforge
     [62]  = {2,2097,132566,-1},  -- Dreadhorn
@@ -152,6 +173,7 @@ local ESOStyleBookData = {
     [33]  = {57590 , 57591 , 64554 , 0},                -- Akaviri
     [34]  = {54868 , 0     , 64559 , 0},                -- Imperial
     [35]  = {57605 , 57606 , 64555 , 0},                -- Yokudan
+    --[36]  = {-1,-1,-1,-1},                            -- Universal
     [38]  = {0     , 0     , 132532, 0},                -- Tsaesci
     [39]  = {82071 , 82072 , 82086 , 0},                -- Minotaur
     [40]  = {75228 , 75229 , 75243 , 0},                -- Ebony
@@ -174,6 +196,9 @@ local ESOStyleBookData = {
     [57]  = {114951, 114952, 114966, 0},                -- Mazzatun
     [58]  = {82038 , 82039 , 82053 , 0},                -- Grim Harlequin
     [59]  = {82022 , 82023 , 82037 , 82103 },           -- Hollowjack
+------------------------------------------------------------------------------------------------------------------------
+-- NEW STYLES BELOW! ADDED AFTER LAST LibMotifCategories Update - since version 2
+---------------------------------------------------------------------------------------------------------------------------
     [60]  = {130026, 130027, 130041, 0},                -- Refabricated
     [61]  = {132533, 132534, 132548, 0},                -- Bloodforge
     [62]  = {132565, 132566, 132580, 0},                -- Dreadhorn
@@ -209,3 +234,179 @@ local ESOStyleBookData = {
     [105] = {160610, 160611, 160625, 0},                -- Ancestral Orc
 }
 lib.ESOStyleBookData = ESOStyleBookData
+
+
+------------------------------------------------------------------------------------------------------------------------
+--Library functions for the data tables
+------------------------------------------------------------------------------------------------------------------------
+
+--Update the table lib.ESOStyleData with the 4th column (lib.CONSTANTS.STYLE_MOTIF_ID) = motifId
+function lib:updateMotifNumbersOfStyles()
+    --Get the motif number from an example item's name, and update it to index 4 () of table ESOStyles
+    if not lib or not lib.ESOStyleData then return end
+    for styleId, _ in pairs(lib.ESOStyleData) do
+        local motifNumber = lib:GetMotifNumberOfStyle(styleId)
+        motifNumber = motifNumber or 0
+        lib.ESOStyleData[styleId][constants.STYLE_MOTIF_ID] = motifNumber
+    end
+    --Unset the function so noone else calls it
+    lib.updateMotifNumbersOfStyles = nil
+end
+
+
+------------------------------------------------------------------------------------------------------------------------
+--Library lookup tables
+------------------------------------------------------------------------------------------------------------------------
+--Lookup table for the motifs and styles
+local motifIdToItemStyleLookup = {
+    --Add a range of itemIds to this table "motifIdToItemStyleLookup", see below at [ItemIds of style page]
+    AddRange = function(self, min, max, itemStyle)
+        max = max or min
+        for motifItemId = min, max do
+            self[motifItemId] = itemStyle
+        end
+    end,
+    --Get the item's style by help of the itemLink
+    GetItemStyle = function(self, itemLink)
+        local itemStyle = GetItemLinkItemStyle(itemLink)
+        --No itemStyle given?
+        if itemStyle == ITEMSTYLE_NONE then
+            local itemType = GetItemLinkItemType(itemLink)
+            --Racial motif
+            if  itemType == ITEMTYPE_RACIAL_STYLE_MOTIF then
+                local motifItemId = GetMotifItemIdByItemLink(itemLink)
+                itemStyle = self[motifItemId]
+            else
+                --No armor part
+                if itemType ~= ITEMTYPE_ARMOR and itemType ~= ITEMTYPE_WEAPON then
+                    itemStyle = -1
+                end
+            end
+        end
+        return itemStyle
+    end,
+}
+lib.motifIdToItemStyleLookup = motifIdToItemStyleLookup
+
+--The lookup table for the itemStyle to category
+local categoryLookup = {
+    --Set the itemstyle none category
+    [ITEMSTYLE_NONE]        = LMC_MOTIF_CATEGORY_DROPPED,
+    [ITEMSTYLE_UNIVERSAL]   = LMC_MOTIF_CATEGORY_CROWN,
+    --Other table contents will be filled dynamically from function "lib:addItemIdsOfStylesToInternalLookupTables()"
+}
+lib.categoryLookup = categoryLookup
+
+--The lookup table for the "new" itemStyles (added later to the game) to category
+--TODO: Maybe change this to only define the last added items (per APIversion) as "new"?
+local newLookup = {
+    --Dropped
+    [ITEMSTYLE_AREA_TSAESCI] = LMC_MOTIF_CATEGORY_DROPPED,
+    [ITEMSTYLE_ORG_REDORAN] = LMC_MOTIF_CATEGORY_DROPPED,
+    [ITEMSTYLE_ORG_HLAALU] = LMC_MOTIF_CATEGORY_DROPPED,
+    [ITEMSTYLE_ORG_TELVANNI] = LMC_MOTIF_CATEGORY_DROPPED,
+    [ITEMSTYLE_ORG_WORM_CULT] = LMC_MOTIF_CATEGORY_DROPPED,
+
+    --Exotic
+    [ITEMSTYLE_ORG_MORAG_TONG] = LMC_MOTIF_CATEGORY_EXOTIC,
+    [ITEMSTYLE_ORG_ORDINATOR] = LMC_MOTIF_CATEGORY_EXOTIC,
+    [ITEMSTYLE_ORG_BUOYANT_ARMIGER] = LMC_MOTIF_CATEGORY_EXOTIC,
+    [ITEMSTYLE_AREA_ASHLANDER] = LMC_MOTIF_CATEGORY_EXOTIC,
+
+    --TODO: Add new ones for all the DLCs after Worm Cult etc.
+}
+lib.newLookup = newLookup
+
+
+------------------------------------------------------------------------------------------------------------------------
+--Library functions for the lookup tables
+------------------------------------------------------------------------------------------------------------------------
+function lib:addItemIdsOfStylesToInternalLookupTables()
+    --[[
+    ITEMSTYLE_NONE                      = 0
+    ITEMSTYLE_RACIAL_BRETON             = 1
+    ITEMSTYLE_RACIAL_REDGUARD           = 2
+    ITEMSTYLE_RACIAL_ORC                = 3
+    ITEMSTYLE_RACIAL_DARK_ELF           = 4
+    ITEMSTYLE_RACIAL_NORD               = 5
+    ITEMSTYLE_RACIAL_ARGONIAN           = 6
+    ITEMSTYLE_RACIAL_HIGH_ELF           = 7
+    ITEMSTYLE_RACIAL_WOOD_ELF           = 8
+    ITEMSTYLE_RACIAL_KHAJIIT            = 9
+    ITEMSTYLE_UNIQUE                    = 10
+    ITEMSTYLE_ORG_THIEVES_GUILD         = 11
+    ITEMSTYLE_ORG_DARK_BROTHERHOOD      = 12
+    ITEMSTYLE_DEITY_MALACATH            = 13
+    ITEMSTYLE_AREA_DWEMER               = 14
+    ITEMSTYLE_AREA_ANCIENT_ELF          = 15
+    ITEMSTYLE_DEITY_AKATOSH             = 16
+    ITEMSTYLE_AREA_REACH                = 17
+    ITEMSTYLE_ENEMY_BANDIT              = 18
+    ITEMSTYLE_ENEMY_PRIMITIVE           = 19
+    ITEMSTYLE_ENEMY_DAEDRIC             = 20
+    ITEMSTYLE_DEITY_TRINIMAC            = 21
+    ITEMSTYLE_AREA_ANCIENT_ORC          = 22
+    ITEMSTYLE_ALLIANCE_DAGGERFALL       = 23
+    ITEMSTYLE_ALLIANCE_EBONHEART        = 24
+    ITEMSTYLE_ALLIANCE_ALDMERI          = 25
+    ITEMSTYLE_UNDAUNTED                 = 26
+    ITEMSTYLE_RAIDS_CRAGLORN            = 27
+    ITEMSTYLE_GLASS                     = 28
+    ITEMSTYLE_AREA_XIVKYN               = 29
+    ITEMSTYLE_AREA_SOUL_SHRIVEN         = 30
+    ITEMSTYLE_ENEMY_DRAUGR              = 31
+    ITEMSTYLE_ENEMY_MAORMER             = 32
+    ITEMSTYLE_AREA_AKAVIRI              = 33
+    ITEMSTYLE_RACIAL_IMPERIAL           = 34
+    ITEMSTYLE_AREA_YOKUDAN              = 35
+    ITEMSTYLE_UNIVERSAL                 = 36
+    ITEMSTYLE_AREA_REACH_WINTER         = 37
+    ITEMSTYLE_AREA_TSAESCI              = 38
+    ITEMSTYLE_ENEMY_MINOTAUR            = 39
+    ITEMSTYLE_EBONY                     = 40
+    ITEMSTYLE_ORG_ABAHS_WATCH           = 41
+    ITEMSTYLE_HOLIDAY_SKINCHANGER       = 42
+    ITEMSTYLE_ORG_MORAG_TONG            = 43
+    ITEMSTYLE_AREA_RA_GADA              = 44
+    ITEMSTYLE_ENEMY_DROMOTHRA           = 45
+    ITEMSTYLE_ORG_ASSASSINS             = 46
+    ITEMSTYLE_ORG_OUTLAW                = 47
+    ITEMSTYLE_ORG_REDORAN               = 48
+    ITEMSTYLE_ORG_HLAALU                = 49
+    ITEMSTYLE_ORG_ORDINATOR             = 50
+    ITEMSTYLE_ORG_TELVANNI              = 51
+    ITEMSTYLE_ORG_BUOYANT_ARMIGER       = 52
+    ITEMSTYLE_HOLIDAY_FROSTCASTER       = 53
+    ITEMSTYLE_AREA_ASHLANDER            = 54
+    ITEMSTYLE_ORG_WORM_CULT             = 55
+    ITEMSTYLE_ENEMY_SILKEN_RING         = 56
+    ITEMSTYLE_ENEMY_MAZZATUN            = 57
+    ITEMSTYLE_HOLIDAY_GRIM_HARLEQUIN    = 58
+    ITEMSTYLE_HOLIDAY_HOLLOWJACK        = 59
+
+    ITEMSTYLE_MIN_VALUE                 = 1
+    ITEMSTYLE_MAX_VALUE                 = GetHighestItemStyleId()
+    ]]
+
+    --Use the new data tables ESOStyleData and ESOStyleBookData to add the itemId, or an itemId range, dynamically for
+    --each styleId. The "from" itemId is ESOStyleBookData[styleId][1] and the "to" itemId is
+    --ESOStyleBookData[styleId][3].
+    --The lookup table where this data is added is "motifIdToItemStyleLookup"
+    for styleId, styleBookData in pairs(ESOStyleBookData) do
+        if styleBookData then
+            local LibMotifCategoriesCategory  = (ESOStyleData[styleId] and ESOStyleData[styleId][constants.STYLE_CATEGORY])
+            if LibMotifCategoriesCategory ~= nil then
+                local fromRange = styleBookData[constants.STYLE_BOOK_ITEM_ID]
+                local toRange   = styleBookData[constants.STYLE_BOOK_CHAPTER_ITEM_ID]
+                if toRange == 0 then toRange = nil end
+                motifIdToItemStyleLookup:AddRange(fromRange ,toRange, styleId)
+
+                --Add the category to the categories table
+                categoryLookup[styleId] = LibMotifCategoriesCategory
+            end
+        end
+    end
+
+    --Unset the function so noone else calls it
+    lib.addItemIdsOfStylesToInternalLookupTables = nil
+end

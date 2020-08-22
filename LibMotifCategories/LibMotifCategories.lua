@@ -15,10 +15,13 @@ end
 local APIVersion = GetAPIVersion()
 local svWasCreated = false
 
-local constants = lib.CONSTANTS
-local ESOStyleData = lib.ESOStyleData
-local ESOStyleBookData = lib.ESOStyleBookData
+local constants                 = lib.CONSTANTS
+local ESOStyleData              = lib.ESOStyleData
+local ESOStyleBookData          = lib.ESOStyleBookData
 
+local motifIdToItemStyleLookup  = lib.motifIdToItemStyleLookup
+local categoryLookup            = lib.categoryLookup
+local newLookup                 = lib.newLookup
 
 
 ------------------------------------------------------------------------------------------------------------------------
@@ -38,18 +41,6 @@ local function GetMotifItemIdByItemLink(itemLink)
     if itemLink == nil or itemLink == "" then return -1 end
     local motifItemId = GetItemLinkItemId(itemLink) or select(4, ZO_LinkHandler_ParseLink(itemLink))
     return motifItemId
-end
-
-
---Update the table lib.ESOStyleData with the 4th column (lib.CONSTANTS.STYLE_MOTIF_ID) = motifId
-local function getMotifNumbersOfStyles()
-    --Get the motif number from an example item's name, and update it to index 4 () of table ESOStyles
-    if not lib or not lib.ESOStyleData then return end
-    for styleId, _ in pairs(lib.ESOStyleData) do
-        local motifNumber = lib:GetMotifNumberOfStyle(styleId)
-        motifNumber = motifNumber or 0
-        lib.ESOStyleData[styleId][constants.STYLE_MOTIF_ID] = motifNumber
-    end
 end
 
 
@@ -109,211 +100,6 @@ local function checkIfStyleIsKnown(styleId, chapter, completelyKnown)
     --Only 1 was checked and not known
     return false
 end
-
-
---[[
---Build the library's Styles list including the book chapters etc.
-local function BuildStyleTable()
-    if not ESOStyleBookData then return end
-    lib.Styles = {}
-    local maxChaptersMinusOne = constants.MAX_STYLE_BOOK_CHAPTERS - 1
-    local STYLE_BOOK_ID = constants.STYLE_BOOK_ID
-    local STYLE_BOOK_CHAPTER_ID =  constants.STYLE_BOOK_CHAPTER_ID
-    local STYLE_BOOK_CROWN_ID = constants.STYLE_BOOK_CROWN_ID
-    local STYLE_BOOK_CHAPTER_CROWN_ID = constants.STYLE_BOOK_CHAPTER_CROWN_ID
-    for _, bookData in pairs(ESOStyleBookData) do
-        if bookData[STYLE_BOOK_ID] > 0 then
-            table.insert(lib.Styles, bookData[STYLE_BOOK_ID])
-        end
-        if bookData[STYLE_BOOK_CHAPTER_ID] > 0 then
-            for chapter = 0, maxChaptersMinusOne do
-                table.insert(lib.Styles, bookData[STYLE_BOOK_CHAPTER_ID]+chapter)
-            end
-        end
-        if bookData[STYLE_BOOK_CROWN_ID] > 0 then
-            table.insert(lib.Styles, bookData[STYLE_BOOK_CROWN_ID])
-        end
-        if bookData[STYLE_BOOK_CHAPTER_CROWN_ID] > 0 then
-            for chapter = 0, maxChaptersMinusOne do
-                table.insert(lib.Styles, bookData[STYLE_BOOK_CHAPTER_CROWN_ID]+chapter)
-            end
-        end
-    end
-end
-]]
-
-
-------------------------------------------------------------------------------------------------------------------------
---Library lookup tables
-------------------------------------------------------------------------------------------------------------------------
---Lookup table for the motifs and styles
-local motifIdToItemStyleLookup = {
-    --Add a range of itemIds to this table "motifIdToItemStyleLookup", see below at [ItemIds of style page]
-    AddRange = function(self, min, max, itemStyle)
-        for motifId = min, max do
-            self[motifId] = itemStyle
-        end
-    end,
-    --Get the item's style by help of the itemLink
-    GetItemStyle = function(self, itemLink)
-        local itemStyle = GetItemLinkItemStyle(itemLink)
-        --No itemStyle given?
-        if itemStyle == ITEMSTYLE_NONE then
-            local itemType = GetItemLinkItemType(itemLink)
-            --Racial motif
-            if  itemType == ITEMTYPE_RACIAL_STYLE_MOTIF then
-                local motifItemId = GetMotifItemIdByItemLink(itemLink)
-                itemStyle = self[motifItemId]
-            else
-                --No armor part
-                if itemType ~= ITEMTYPE_ARMOR and itemType ~= ITEMTYPE_WEAPON then
-                    itemStyle = -1
-                end
-            end
-        end
-        return itemStyle
-    end,
-
-
-    --[ItemIds of motif items]
-    --The following itemIds are used to determine the itemStyle of an item, which itsself does not provide an itemStyle
-    --e.g. style pages or motif books.
-    --There will be added other itemId ranges vie function "AddRange" (see above)
-    [16424] = ITEMSTYLE_RACIAL_HIGH_ELF,
-    [16425] = ITEMSTYLE_RACIAL_BRETON,
-    [16426] = ITEMSTYLE_RACIAL_ORC,
-    [16427] = ITEMSTYLE_RACIAL_REDGUARD,
-    [16428] = ITEMSTYLE_RACIAL_WOOD_ELF,
-    [27244] = ITEMSTYLE_RACIAL_NORD,
-    [27245] = ITEMSTYLE_RACIAL_DARK_ELF,
-    [27246] = ITEMSTYLE_RACIAL_ARGONIAN,
-    [44698] = ITEMSTYLE_RACIAL_KHAJIIT,
-    [51345] = ITEMSTYLE_ENEMY_PRIMITIVE,
-    [51565] = ITEMSTYLE_AREA_REACH,
-    [51638] = ITEMSTYLE_AREA_ANCIENT_ELF,
-    [51688] = ITEMSTYLE_ENEMY_DAEDRIC,
-    [54868] = ITEMSTYLE_RACIAL_IMPERIAL,
-
-    [64540] = ITEMSTYLE_RACIAL_HIGH_ELF,
-    [64541] = ITEMSTYLE_RACIAL_BRETON,
-    [64542] = ITEMSTYLE_RACIAL_ORC,
-    [64543] = ITEMSTYLE_RACIAL_REDGUARD,
-    [64544] = ITEMSTYLE_RACIAL_WOOD_ELF,
-    [64545] = ITEMSTYLE_RACIAL_NORD,
-    [64546] = ITEMSTYLE_RACIAL_DARK_ELF,
-    [64547] = ITEMSTYLE_RACIAL_ARGONIAN,
-    [64548] = ITEMSTYLE_RACIAL_KHAJIIT,
-    [64549] = ITEMSTYLE_ENEMY_PRIMITIVE,
-    [64550] = ITEMSTYLE_AREA_REACH,
-    [64551] = ITEMSTYLE_AREA_ANCIENT_ELF,
-    [64552] = ITEMSTYLE_ENEMY_DAEDRIC,
-    [64553] = ITEMSTYLE_AREA_DWEMER,
-    [64554] = ITEMSTYLE_AREA_AKAVIRI,
-    [64555] = ITEMSTYLE_AREA_YOKUDAN,
-    [64556] = ITEMSTYLE_AREA_XIVKYN,
-    [64559] = ITEMSTYLE_RACIAL_IMPERIAL,
-    [71765] = ITEMSTYLE_AREA_SOUL_SHRIVEN,
-    --New ones for all the DLCs after Worm Cult etc. will be added via motifIdToItemStyleLookup:AddRange, see at the
-    --bottom of this library
-}
-lib.motifIdToItemStyleLookup = motifIdToItemStyleLookup
-
---The lookup table for the itemStyle to category
-local categoryLookup = {
-    --Normal
-    [ITEMSTYLE_RACIAL_ARGONIAN] = LMC_MOTIF_CATEGORY_NORMAL,
-    [ITEMSTYLE_RACIAL_WOOD_ELF] = LMC_MOTIF_CATEGORY_NORMAL,
-    [ITEMSTYLE_RACIAL_BRETON] = LMC_MOTIF_CATEGORY_NORMAL,
-    [ITEMSTYLE_RACIAL_HIGH_ELF] = LMC_MOTIF_CATEGORY_NORMAL,
-    [ITEMSTYLE_RACIAL_DARK_ELF] = LMC_MOTIF_CATEGORY_NORMAL,
-    [ITEMSTYLE_RACIAL_KHAJIIT] = LMC_MOTIF_CATEGORY_NORMAL,
-    [ITEMSTYLE_RACIAL_NORD] = LMC_MOTIF_CATEGORY_NORMAL,
-    [ITEMSTYLE_RACIAL_ORC] = LMC_MOTIF_CATEGORY_NORMAL,
-    [ITEMSTYLE_RACIAL_REDGUARD] = LMC_MOTIF_CATEGORY_NORMAL,
-
-    --Rare
-    [ITEMSTYLE_AREA_REACH] = LMC_MOTIF_CATEGORY_RARE,
-    [ITEMSTYLE_ENEMY_PRIMITIVE] = LMC_MOTIF_CATEGORY_RARE,
-    [ITEMSTYLE_ENEMY_DAEDRIC] = LMC_MOTIF_CATEGORY_RARE,
-    [ITEMSTYLE_AREA_ANCIENT_ELF] = LMC_MOTIF_CATEGORY_RARE,
-    [ITEMSTYLE_AREA_SOUL_SHRIVEN] = LMC_MOTIF_CATEGORY_RARE,
-
-    --Alliance
-    [ITEMSTYLE_RACIAL_IMPERIAL] = LMC_MOTIF_CATEGORY_ALLIANCE,
-    [ITEMSTYLE_ALLIANCE_ALDMERI] = LMC_MOTIF_CATEGORY_ALLIANCE,
-    [ITEMSTYLE_ALLIANCE_EBONHEART] = LMC_MOTIF_CATEGORY_ALLIANCE,
-    [ITEMSTYLE_ALLIANCE_DAGGERFALL] = LMC_MOTIF_CATEGORY_ALLIANCE,
-
-    --Exotic
-    [ITEMSTYLE_AREA_DWEMER] = LMC_MOTIF_CATEGORY_EXOTIC,
-    [ITEMSTYLE_AREA_XIVKYN] = LMC_MOTIF_CATEGORY_EXOTIC,
-    [ITEMSTYLE_AREA_AKAVIRI] = LMC_MOTIF_CATEGORY_EXOTIC,
-    [ITEMSTYLE_GLASS] = LMC_MOTIF_CATEGORY_EXOTIC,
-    [ITEMSTYLE_UNDAUNTED] = LMC_MOTIF_CATEGORY_EXOTIC,
-    [ITEMSTYLE_AREA_ANCIENT_ORC] = LMC_MOTIF_CATEGORY_EXOTIC,
-    [ITEMSTYLE_ORG_OUTLAW] = LMC_MOTIF_CATEGORY_EXOTIC,
-    [ITEMSTYLE_DEITY_TRINIMAC] = LMC_MOTIF_CATEGORY_EXOTIC,
-    [ITEMSTYLE_DEITY_MALACATH] = LMC_MOTIF_CATEGORY_EXOTIC,
-    [ITEMSTYLE_ORG_THIEVES_GUILD] = LMC_MOTIF_CATEGORY_EXOTIC,
-    [ITEMSTYLE_ORG_ASSASSINS] = LMC_MOTIF_CATEGORY_EXOTIC,
-    [ITEMSTYLE_ORG_ABAHS_WATCH] = LMC_MOTIF_CATEGORY_EXOTIC,
-    [ITEMSTYLE_AREA_YOKUDAN] = LMC_MOTIF_CATEGORY_EXOTIC,
-    [ITEMSTYLE_DEITY_AKATOSH] = LMC_MOTIF_CATEGORY_EXOTIC,
-    [ITEMSTYLE_ENEMY_MINOTAUR] = LMC_MOTIF_CATEGORY_EXOTIC,
-    [ITEMSTYLE_ORG_DARK_BROTHERHOOD] = LMC_MOTIF_CATEGORY_EXOTIC,
-    [ITEMSTYLE_RAIDS_CRAGLORN] = LMC_MOTIF_CATEGORY_EXOTIC,
-    [ITEMSTYLE_ENEMY_DRAUGR] = LMC_MOTIF_CATEGORY_EXOTIC,
-    [ITEMSTYLE_EBONY] = LMC_MOTIF_CATEGORY_EXOTIC,
-    [ITEMSTYLE_HOLIDAY_SKINCHANGER] = LMC_MOTIF_CATEGORY_EXOTIC,
-    [ITEMSTYLE_AREA_RA_GADA] = LMC_MOTIF_CATEGORY_EXOTIC,
-    [ITEMSTYLE_ENEMY_DROMOTHRA] = LMC_MOTIF_CATEGORY_EXOTIC,
-    [ITEMSTYLE_HOLIDAY_FROSTCASTER] = LMC_MOTIF_CATEGORY_EXOTIC,
-    [ITEMSTYLE_ENEMY_SILKEN_RING] = LMC_MOTIF_CATEGORY_EXOTIC,
-    [ITEMSTYLE_ENEMY_MAZZATUN] = LMC_MOTIF_CATEGORY_EXOTIC,
-    [ITEMSTYLE_HOLIDAY_GRIM_HARLEQUIN] = LMC_MOTIF_CATEGORY_EXOTIC,
-    [ITEMSTYLE_HOLIDAY_HOLLOWJACK] = LMC_MOTIF_CATEGORY_EXOTIC,
-    [ITEMSTYLE_ORG_MORAG_TONG] = LMC_MOTIF_CATEGORY_EXOTIC,
-    [ITEMSTYLE_ORG_ORDINATOR] = LMC_MOTIF_CATEGORY_EXOTIC,
-    [ITEMSTYLE_ORG_BUOYANT_ARMIGER] = LMC_MOTIF_CATEGORY_EXOTIC,
-    [ITEMSTYLE_AREA_ASHLANDER] = LMC_MOTIF_CATEGORY_EXOTIC,
-
-    --Dropped
-    [ITEMSTYLE_NONE] = LMC_MOTIF_CATEGORY_DROPPED,
-    [ITEMSTYLE_ENEMY_BANDIT] = LMC_MOTIF_CATEGORY_DROPPED,
-    [ITEMSTYLE_ENEMY_MAORMER] = LMC_MOTIF_CATEGORY_DROPPED,
-    [ITEMSTYLE_AREA_REACH_WINTER] = LMC_MOTIF_CATEGORY_DROPPED,
-    [ITEMSTYLE_AREA_TSAESCI] = LMC_MOTIF_CATEGORY_DROPPED,
-    [ITEMSTYLE_ORG_REDORAN] = LMC_MOTIF_CATEGORY_DROPPED,
-    [ITEMSTYLE_ORG_HLAALU] = LMC_MOTIF_CATEGORY_DROPPED,
-    [ITEMSTYLE_ORG_TELVANNI] = LMC_MOTIF_CATEGORY_DROPPED,
-    [ITEMSTYLE_ORG_WORM_CULT] = LMC_MOTIF_CATEGORY_DROPPED,
-
-    --Universal
-    [ITEMSTYLE_UNIVERSAL] = LMC_MOTIF_CATEGORY_CROWN,
-
-    --TODO: Add other itemStyles which are not in the addon compatibility files to the list and assign their category
-}
-lib.categoryLookup = categoryLookup
-
---The lookup table for the "new" itemStyles (added later to the game) to category
---TODO: Maybe change this to only define the last added items (per APIversion) as "new"?
-local newLookup = {
-    --Dropped
-    [ITEMSTYLE_AREA_TSAESCI] = LMC_MOTIF_CATEGORY_DROPPED,
-    [ITEMSTYLE_ORG_REDORAN] = LMC_MOTIF_CATEGORY_DROPPED,
-    [ITEMSTYLE_ORG_HLAALU] = LMC_MOTIF_CATEGORY_DROPPED,
-    [ITEMSTYLE_ORG_TELVANNI] = LMC_MOTIF_CATEGORY_DROPPED,
-    [ITEMSTYLE_ORG_WORM_CULT] = LMC_MOTIF_CATEGORY_DROPPED,
-    --TODO: Add new ones for all the DLCs after Worm Cult etc.
-
-    --Exotic
-    [ITEMSTYLE_ORG_MORAG_TONG] = LMC_MOTIF_CATEGORY_EXOTIC,
-    [ITEMSTYLE_ORG_ORDINATOR] = LMC_MOTIF_CATEGORY_EXOTIC,
-    [ITEMSTYLE_ORG_BUOYANT_ARMIGER] = LMC_MOTIF_CATEGORY_EXOTIC,
-    [ITEMSTYLE_AREA_ASHLANDER] = LMC_MOTIF_CATEGORY_EXOTIC,
-    --TODO: Add new ones for all the DLCs after Worm Cult etc.
-}
-lib.newLookup = newLookup
 
 
 --Dynamically build the table "styleItemIndices" where the original value of the addon compatibility line will be
@@ -502,9 +288,9 @@ end
 function lib:GetStyleBookItemId(styleId, isCrownBook)
     if not ESOStyleBookData[styleId] then return end
     isCrownBook = isCrownBook or false
-    local bookTableIndexToUse = constants.STYLE_BOOK_ID
+    local bookTableIndexToUse = constants.STYLE_BOOK_ITEM_ID
     if isCrownBook == true then
-        bookTableIndexToUse = constants.STYLE_BOOK_CROWN_ID
+        bookTableIndexToUse = constants.STYLE_BOOK_CROWN_ITEM_ID
     end
     return ESOStyleBookData[styleId][bookTableIndexToUse]
 end
@@ -632,46 +418,10 @@ function lib:Initialize()
     end
 
     --Update the table self.ESOStyleData with the 4th column "motifId"
-    getMotifNumbersOfStyles()
+    lib:updateMotifNumbersOfStyles()
 
-    --Add the ranges of itemIds to the table "motifIdToItemStyleLookup" to lookup the itemStyles and motif info
-    motifIdToItemStyleLookup:AddRange(57572, 57586,     ITEMSTYLE_AREA_DWEMER)
-    motifIdToItemStyleLookup:AddRange(57590, 57604,     ITEMSTYLE_AREA_AKAVIRI)
-    motifIdToItemStyleLookup:AddRange(57605, 57619,     ITEMSTYLE_AREA_YOKUDAN)
-    motifIdToItemStyleLookup:AddRange(57834, 57848,     ITEMSTYLE_AREA_XIVKYN)
-    motifIdToItemStyleLookup:AddRange(64669, 64684,     ITEMSTYLE_GLASS)
-    motifIdToItemStyleLookup:AddRange(64715, 64730,     ITEMSTYLE_UNDAUNTED)
-    motifIdToItemStyleLookup:AddRange(69527, 69542,     ITEMSTYLE_AREA_ANCIENT_ORC)
-    motifIdToItemStyleLookup:AddRange(71522, 71537,     ITEMSTYLE_ORG_OUTLAW)
-    motifIdToItemStyleLookup:AddRange(71550, 71565,     ITEMSTYLE_DEITY_TRINIMAC)
-    motifIdToItemStyleLookup:AddRange(71566, 71581,     ITEMSTYLE_DEITY_MALACATH)
-    motifIdToItemStyleLookup:AddRange(71672, 71687,     ITEMSTYLE_AREA_RA_GADA)
-    motifIdToItemStyleLookup:AddRange(71688, 71703,     ITEMSTYLE_ALLIANCE_ALDMERI)
-    motifIdToItemStyleLookup:AddRange(71704, 71719,     ITEMSTYLE_ALLIANCE_DAGGERFALL)
-    motifIdToItemStyleLookup:AddRange(71720, 71735,     ITEMSTYLE_ALLIANCE_EBONHEART)
-    motifIdToItemStyleLookup:AddRange(73838, 73853,     ITEMSTYLE_ORG_MORAG_TONG)
-    motifIdToItemStyleLookup:AddRange(73854, 73869,     ITEMSTYLE_HOLIDAY_SKINCHANGER)
-    motifIdToItemStyleLookup:AddRange(74539, 74554,     ITEMSTYLE_ORG_ABAHS_WATCH)
-    motifIdToItemStyleLookup:AddRange(74555, 74570,     ITEMSTYLE_ORG_THIEVES_GUILD)
-    motifIdToItemStyleLookup:AddRange(74652, 74667,     ITEMSTYLE_ENEMY_DROMOTHRA)
-    motifIdToItemStyleLookup:AddRange(75228, 75243,     ITEMSTYLE_EBONY)
-    motifIdToItemStyleLookup:AddRange(76878, 76893,     ITEMSTYLE_ORG_ASSASSINS)
-    motifIdToItemStyleLookup:AddRange(76894, 76909,     ITEMSTYLE_ENEMY_DRAUGR)
-    motifIdToItemStyleLookup:AddRange(82006, 82021,     ITEMSTYLE_RAIDS_CRAGLORN)
-    motifIdToItemStyleLookup:AddRange(82022, 82037,     ITEMSTYLE_HOLIDAY_HOLLOWJACK)
-    motifIdToItemStyleLookup:AddRange(82038, 82038,     ITEMSTYLE_HOLIDAY_GRIM_HARLEQUIN)
-    motifIdToItemStyleLookup:AddRange(82054, 82069,     ITEMSTYLE_ORG_DARK_BROTHERHOOD)
-    motifIdToItemStyleLookup:AddRange(82071, 82086,     ITEMSTYLE_ENEMY_MINOTAUR)
-    motifIdToItemStyleLookup:AddRange(82087, 82102,     ITEMSTYLE_DEITY_AKATOSH)
-    motifIdToItemStyleLookup:AddRange(82103, 82116,     ITEMSTYLE_HOLIDAY_HOLLOWJACK)
-    motifIdToItemStyleLookup:AddRange(96954, 96954,     ITEMSTYLE_HOLIDAY_FROSTCASTER)
-    motifIdToItemStyleLookup:AddRange(114951, 114956,   ITEMSTYLE_ENEMY_MAZZATUN)
-    motifIdToItemStyleLookup:AddRange(114967, 114982,   ITEMSTYLE_ENEMY_SILKEN_RING)
-    motifIdToItemStyleLookup:AddRange(121316, 121331,   ITEMSTYLE_ORG_BUOYANT_ARMIGER)
-    motifIdToItemStyleLookup:AddRange(121332, 121347,   ITEMSTYLE_ORG_TELVANNI)
-    motifIdToItemStyleLookup:AddRange(121348, 121363,   ITEMSTYLE_ORG_ORDINATOR)
-    motifIdToItemStyleLookup:AddRange(124679, 124694,   ITEMSTYLE_AREA_ASHLANDER)
-    --TODO: Add new ones for all the DLCs after Worm Cult etc.
+    --Add the ranges of itemIds of the styles to the internal lookup table
+    lib:addItemIdsOfStylesToInternalLookupTables()
 end
 
 --Initialize the library

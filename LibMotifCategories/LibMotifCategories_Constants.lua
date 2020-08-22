@@ -35,18 +35,18 @@ lib.CONSTANTS = {}
 local constants = lib.CONSTANTS
 
 --Styles
-constants.STYLE_CATEGORY                = 1
-constants.STYLE_ACHIEVEMENT_ID          = 2
-constants.STYLE_EXAMPLE_ITEM_ID         = 3
-constants.STYLE_MOTIF_ID                = 4
+constants.STYLE_CATEGORY                    = 1
+constants.STYLE_ACHIEVEMENT_ID              = 2
+constants.STYLE_EXAMPLE_ITEM_ID             = 3
+constants.STYLE_MOTIF_ID                    = 4
 --Style books
-constants.STYLE_BOOK_ID                 = 1
-constants.STYLE_BOOK_CHAPTER_ID         = 2
-constants.STYLE_BOOK_CROWN_ID           = 3
-constants.STYLE_BOOK_CHAPTER_CROWN_ID   = 4
+constants.STYLE_BOOK_ITEM_ID                = 1
+constants.STYLE_BOOK_CHAPTER_ITEM_ID        = 2
+constants.STYLE_BOOK_CROWN_ITEM_ID          = 3
+constants.STYLE_BOOK_CHAPTER_CROWN_ITEM_ID  = 4
 
 --Maximum chapters of a book
-constants.MAX_STYLE_BOOK_CHAPTERS       = 14
+constants.MAX_STYLE_BOOK_CHAPTERS           = 14
 
 --Template string of an itemlink used to create an item of the style
 constants.styleItemLinkTemplate     = "|H1:item:%u:6:1:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0|h|h"
