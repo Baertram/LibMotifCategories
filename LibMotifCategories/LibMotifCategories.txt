@@ -1,0 +1,11 @@
+## Title: LibMotifCategories
+## Author: Randactyl, Baertram
+## Version: 4
+## AddOnVersion: 4
+## IsLibrary: true
+## APIVersion: 100031 100032
+## SavedVariables: LibMotifCategories_SV
+
+LibMotifCategories_Constants.lua
+LibMotifCategories_Data.lua
+LibMotifCategories.lua
