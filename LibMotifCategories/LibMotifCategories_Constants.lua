@@ -46,14 +46,12 @@ local constants = lib.CONSTANTS
 constants.STYLE_CATEGORY                    = 1
 constants.STYLE_ACHIEVEMENT_ID              = 2
 constants.STYLE_EXAMPLE_ITEM_ID             = 3
-constants.STYLE_MOTIF_ID                    = 4
-constants.STYLE_APIVERSION                  = 5
-
---Style books
-constants.STYLE_BOOK_ITEM_ID                = 1
-constants.STYLE_BOOK_CHAPTER_ITEM_ID        = 2
-constants.STYLE_BOOK_CROWN_ITEM_ID          = 3
-constants.STYLE_BOOK_CHAPTER_CROWN_ITEM_ID  = 4
+constants.STYLE_BOOK_ITEM_ID                = 4
+constants.STYLE_BOOK_CHAPTER_ITEM_ID        = 5
+constants.STYLE_BOOK_CROWN_ITEM_ID          = 6
+constants.STYLE_BOOK_CHAPTER_CROWN_ITEM_ID  = 7
+constants.STYLE_MOTIF_ID                    = 8
+constants.STYLE_APIVERSION                  = 9
 
 --Maximum chapters of a book
 constants.MAX_STYLE_BOOK_CHAPTERS           = ITEM_STYLE_CHAPTER_BOWS --or 14

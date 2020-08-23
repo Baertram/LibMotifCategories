@@ -17,7 +17,6 @@ local svWasCreated = false
 
 local constants                 = lib.CONSTANTS
 local ESOStyleData              = lib.ESOStyleData
-local ESOStyleBookData          = lib.ESOStyleBookData
 
 local motifIdToItemStyleLookup  = lib.motifIdToItemStyleLookup
 local categoryLookup            = lib.categoryLookup
@@ -280,13 +279,13 @@ end
 
 --Return the bookId of a style (it's an itemId)
 function lib:GetStyleBookItemId(styleId, isCrownBook)
-    if not ESOStyleBookData[styleId] then return end
+    if not ESOStyleData[styleId] then return end
     isCrownBook = isCrownBook or false
     local bookTableIndexToUse = constants.STYLE_BOOK_ITEM_ID
     if isCrownBook == true then
         bookTableIndexToUse = constants.STYLE_BOOK_CROWN_ITEM_ID
     end
-    return ESOStyleBookData[styleId][bookTableIndexToUse]
+    return ESOStyleData[styleId][bookTableIndexToUse]
 end
 
 
