@@ -250,6 +250,12 @@ function lib:IsCrownStyleCategory(styleId)
 end
 
 
+--Return if the style is the event style category
+function lib:IsEventStyleCategory(styleId)
+    return checkStyleCategoryEquals(styleId, ESOStyleData, constants.STYLE_CATEGORY, LMC_MOTIF_CATEGORY_EVENT)
+end
+
+
 --Return the example itemId (3rd index of the table ESOStyleData) of a style
 function lib:GetStyleItemId(styleId)
     if not ESOStyleData[styleId] then return end
