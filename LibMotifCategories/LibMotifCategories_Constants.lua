@@ -32,6 +32,7 @@ LMC_MOTIF_CATEGORY_ALLIANCE = 3
 LMC_MOTIF_CATEGORY_EXOTIC   = 4
 LMC_MOTIF_CATEGORY_DROPPED  = 5
 LMC_MOTIF_CATEGORY_CROWN    = 6
+LMC_MOTIF_CATEGORY_EVENT    = 7
 
 
 ------------------------------------------------------------------------------------------------------------------------

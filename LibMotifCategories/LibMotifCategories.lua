@@ -307,7 +307,7 @@ end
 ------------------------------------------------------------------------------------------------------------------------
 local function createSV()
     if svWasCreated == true then return end
-    lib.sv = ZO_SavedVars:NewAccountWide(MAJOR .. "_SV", 0.1, "Debug", {}, GetWorldName(), "AllAccountsTheSame")
+    lib.sv = ZO_SavedVars:NewAccountWide(MAJOR .. "_SV", 0.2, "Debug", {}, GetWorldName(), "AllAccountsTheSame")
     if lib.sv ~= nil then svWasCreated = true end
 end
 
@@ -339,16 +339,19 @@ function lib:DebugStyleIds(chatOutput)
             if lang ~= "en" then
                 styleName = ZO_CachedStrFormat("<<C:1>>", styleName)
             end
-            styleIds[i] = {
+            local styleData = lib.ESOStyleData[styleId]
+            local motifId = (styleData and styleData[constants.STYLE_MOTIF_ID]) or -1
+            styleIds[styleId] = {
                 index   = i,
                 id      = styleId,
+                motif   = motifId,
                 name    = {
                    [lang] = styleName
                 },
             }
             styleIdCount = styleIdCount + 1
             if chatOutput == true then
-                d(string.format(">index: [%s], id: %s, name: %s", tostring(i), tostring(styleId), tostring(styleName)))
+                d(string.format(">index: [%s], id: %s, motif: %s, name: %s", tostring(i), tostring(styleId), tostring(motifId), tostring(styleName)))
             end
         end
     end
@@ -357,15 +360,16 @@ function lib:DebugStyleIds(chatOutput)
         lib.sv[APIVersion] = lib.sv[APIVersion] or {}
         lib.sv[APIVersion].StyleIds = lib.sv[APIVersion].StyleIds or {}
         local updatedNames = 0
-        for styleIndex, styleData in pairs(styleIds) do
-            if lib.sv[APIVersion].StyleIds[styleIndex] ~= nil then
-                lib.sv[APIVersion].StyleIds[styleIndex].index   = styleData.index
-                lib.sv[APIVersion].StyleIds[styleIndex].id      = styleData.id
-                lib.sv[APIVersion].StyleIds[styleIndex].name    = lib.sv[APIVersion].StyleIds[styleIndex].name or {}
-                lib.sv[APIVersion].StyleIds[styleIndex].name[lang] = styleData.name[lang]
+        for styleId, styleData in pairs(styleIds) do
+            if lib.sv[APIVersion].StyleIds[styleId] ~= nil then
+                lib.sv[APIVersion].StyleIds[styleId].index   = styleData.index
+                lib.sv[APIVersion].StyleIds[styleId].id      = styleData.id
+                lib.sv[APIVersion].StyleIds[styleId].motif   = styleData.motif
+                lib.sv[APIVersion].StyleIds[styleId].name    = lib.sv[APIVersion].StyleIds[styleId].name or {}
+                lib.sv[APIVersion].StyleIds[styleId].name[lang] = styleData.name[lang]
                 updatedNames = updatedNames + 1
             else
-                lib.sv[APIVersion].StyleIds[styleIndex] = styleData
+                lib.sv[APIVersion].StyleIds[styleId] = styleData
                 updatedNames = updatedNames + 1
             end
         end

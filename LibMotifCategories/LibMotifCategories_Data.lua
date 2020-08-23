@@ -30,15 +30,15 @@ local constants                 = lib.CONSTANTS
 --              LibMotifCategories.lua, as the library is initialized), number APIVersionAsThisStyleWasAdded
 -- } -- name of the style in language EN
 local ESOStyleData = {
-    [1]   = {LMC_MOTIF_CATEGORY_NORMAL,1025,16425,-1, 000000},   -- Breton
-    [2]   = {LMC_MOTIF_CATEGORY_NORMAL,1025,16427,-1, 000000},   -- Redguard
-    [3]   = {LMC_MOTIF_CATEGORY_NORMAL,1025,16426,-1, 000000},   -- Orc
-    [4]   = {LMC_MOTIF_CATEGORY_NORMAL,1025,27245,-1, 000000},   -- Dark Elf
-    [5]   = {LMC_MOTIF_CATEGORY_NORMAL,1025,27244,-1, 000000},   -- Nord
-    [6]   = {LMC_MOTIF_CATEGORY_NORMAL,1025,27246,-1, 000000},   -- Argonian
-    [7]   = {LMC_MOTIF_CATEGORY_NORMAL,1025,16424,-1, 000000},   -- High Elf
-    [8]   = {LMC_MOTIF_CATEGORY_NORMAL,1025,16428,-1, 000000},   -- Wood Elf
-    [9]   = {LMC_MOTIF_CATEGORY_NORMAL,1025,44698,-1, 000000},   -- Khajiit
+    [1]   = {LMC_MOTIF_CATEGORY_NORMAL,1025,16425,-1, 100003},   -- Breton
+    [2]   = {LMC_MOTIF_CATEGORY_NORMAL,1025,16427,-1, 100003},   -- Redguard
+    [3]   = {LMC_MOTIF_CATEGORY_NORMAL,1025,16426,-1, 100003},   -- Orc
+    [4]   = {LMC_MOTIF_CATEGORY_NORMAL,1025,27245,-1, 100003},   -- Dark Elf / Dunmer
+    [5]   = {LMC_MOTIF_CATEGORY_NORMAL,1025,27244,-1, 100003},   -- Nord
+    [6]   = {LMC_MOTIF_CATEGORY_NORMAL,1025,27246,-1, 100003},   -- Argonian
+    [7]   = {LMC_MOTIF_CATEGORY_NORMAL,1025,16424,-1, 100003},   -- High Elf / Altmer
+    [8]   = {LMC_MOTIF_CATEGORY_NORMAL,1025,16428,-1, 100003},   -- Wood Elf / Bosmer
+    [9]   = {LMC_MOTIF_CATEGORY_NORMAL,1025,44698,-1, 100003},   -- Khajiit
 
     [11]  = {LMC_MOTIF_CATEGORY_EXOTIC,1423,74556,-1, 000000},   -- Thieves Guild
     [12]  = {LMC_MOTIF_CATEGORY_EXOTIC,1661,82055,-1, 000000},   -- Dark Brotherhood
@@ -67,7 +67,7 @@ local ESOStyleData = {
     --[32]  = {LMC_MOTIF_CATEGORY_DROPPED,0,0,-1, 000000},         -- Maormer - Still exists?
 --<???
     [33]  = {LMC_MOTIF_CATEGORY_EXOTIC,1318,57591,-1, 000000},   -- Akaviri
-    [34]  = {LMC_MOTIF_CATEGORY_ALLIANCE,1025,54868,-1, 000000}, -- Imperial
+    [34]  = {LMC_MOTIF_CATEGORY_RARE,1025,54868,-1, 000000},     -- Imperial
     [35]  = {LMC_MOTIF_CATEGORY_EXOTIC,1713,57606,-1, 000000},   -- Yokudan
 -->???
     --[36]  = {LMC_MOTIF_CATEGORY_CROWN,0,0,0, 000000},            -- Universal / Crown store - Still exists?
@@ -154,7 +154,7 @@ lib.ESOStyleData = ESOStyleData
 -- Every motif also got a crown version with a different crownItemId, but there are some motifs which ONLY exist as
 -- crown books, like Frostcaster, Tsaesci
 -- -> styleId is determined via GetValidItemStyleId(styleIndex)
--- [styleId] = {number bookItemId, number chapterItem, number crownBookItemId, number crownChapterItemId
+-- [styleId] = {number bookItemId, number chapterItemId, number crownBookItemId, number crownChapterItemId
 -- } -- name of the style in language EN
 local ESOStyleBookData = {
     [1]   = {16425 , 0     , 64541 , 0},                -- Breton
