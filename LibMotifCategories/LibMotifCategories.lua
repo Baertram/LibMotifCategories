@@ -119,7 +119,7 @@ end
 --Get the lib's category of the item's motif
 function lib:GetMotifCategory(itemLink)
     local itemStyle = motifIdToItemStyleLookup:GetItemStyle(itemLink)
-    if itemStyle == -1 then return end
+    if itemStyle == constants.ITEMSTYLE_UNKNOWN then return end
 
     return categoryLookup[itemStyle]
 end
@@ -131,7 +131,7 @@ end
 -->based on the APIVersionAdded parameter 5 in table lib.ESOStyleData[5]
 function lib:IsNewMotif(itemLink)
     local itemStyle = motifIdToItemStyleLookup:GetItemStyle(itemLink)
-    if itemStyle == -1 then return false end
+    if itemStyle == constants.ITEMSTYLE_UNKNOWN then return false end
 
     if newLookup[itemStyle] then
         return true
@@ -144,7 +144,7 @@ end
 --Is this item's motif craftable with the current character?
 function lib:IsMotifCraftable(itemLink)
     local itemStyle = motifIdToItemStyleLookup:GetItemStyle(itemLink)
-    if itemStyle == -1 then return false end
+    if itemStyle == constants.ITEMSTYLE_UNKNOWN then return false end
 
     if styleItemIndices[itemStyle] then
         return true
@@ -157,7 +157,7 @@ end
 --Is this item's motif known to your current character?
 function lib:IsMotifKnown(itemLink)
     local itemStyle = motifIdToItemStyleLookup:GetItemStyle(itemLink)
-    if itemStyle == -1 then return false end
+    if itemStyle == constants.ITEMSTYLE_UNKNOWN then return false end
     local styleItemIndex = styleItemIndices[itemStyle]
     if not styleItemIndex then return false end
 
@@ -345,7 +345,7 @@ function lib:DebugStyleIds(chatOutput)
                 styleName = ZO_CachedStrFormat("<<C:1>>", styleName)
             end
             local styleData = lib.ESOStyleData[styleId]
-            local motifId = (styleData and styleData[constants.STYLE_MOTIF_ID]) or -1
+            local motifId = (styleData and styleData[constants.STYLE_MOTIF_ID]) or constants.MOTIF_UNKNOWN
             styleIds[styleId] = {
                 index   = i,
                 id      = styleId,

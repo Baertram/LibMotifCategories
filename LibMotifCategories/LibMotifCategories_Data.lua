@@ -145,7 +145,7 @@ lib.specialMotifs = specialMotifs
 -- motifItemId is the itemId which will be used to compare with table "motifIdToItemStyleLookup" 's list of itemIds
 -- which were added via "AddRange" function to this table (see initialization of the library)
 local function GetMotifItemIdByItemLink(itemLink)
-    if itemLink == nil or itemLink == "" then return -1 end
+    if itemLink == nil or itemLink == "" then return constants.ITEMID_UNKNOWN end
     local motifItemId = GetItemLinkItemId(itemLink) or select(4, ZO_LinkHandler_ParseLink(itemLink))
     return motifItemId
 end
@@ -193,7 +193,7 @@ local motifIdToItemStyleLookup = {
             else
                 --No armor part
                 if itemType ~= ITEMTYPE_ARMOR and itemType ~= ITEMTYPE_WEAPON then
-                    itemStyle = -1
+                    itemStyle = constants.ITEMSTYLE_UNKNOWN
                 end
             end
         end

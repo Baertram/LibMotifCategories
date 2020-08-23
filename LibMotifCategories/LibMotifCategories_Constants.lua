@@ -43,6 +43,10 @@ lib.CONSTANTS = {}
 local constants = lib.CONSTANTS
 
 --Styles
+constants.ITEMSTYLE_UNKNOWN                 = -1
+constants.MOTIF_UNKNOWN                     = -1
+constants.ITEMID_UNKNOWN                    = -1
+
 constants.STYLE_CATEGORY                    = 1
 constants.STYLE_ACHIEVEMENT_ID              = 2
 constants.STYLE_EXAMPLE_ITEM_ID             = 3
